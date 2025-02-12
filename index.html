@@ -51,6 +51,7 @@
             font-size: 18px;
             border-radius: 8px;
             transition: 0.3s;
+            cursor: pointer;
         }
 
         .play-button:hover {
@@ -61,7 +62,7 @@
 <body>
     <div class="container">
         <h1>Game Tebak Kosakata Kucing</h1>
-        <a href="game.html" class="play-button">Mulai Permainan</a>
+        <button class="play-button" id="start-button">Mulai Permainan</button>
     </div>
 
     <audio id="bg-music" loop>
@@ -69,20 +70,14 @@
     </audio>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("start-button").addEventListener("click", () => {
             let audio = document.getElementById("bg-music");
-            let playPromise = audio.play();
-
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log("Musik mulai otomatis");
-                }).catch(() => {
-                    console.log("Autoplay dicegah, menunggu interaksi...");
-                    document.addEventListener("click", () => {
-                        audio.play();
-                    }, { once: true });
-                });
-            }
+            audio.play()
+                .then(() => {
+                    console.log("Musik diputar setelah klik");
+                    window.location.href = "game.html"; // Masuk ke halaman game
+                })
+                .catch(error => console.error("Gagal memutar musik:", error));
         });
     </script>
 </body>
