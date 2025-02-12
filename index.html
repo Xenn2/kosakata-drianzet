@@ -23,14 +23,33 @@
             align-items: center;
             text-align: center;
             font-family: Arial, sans-serif;
+            overflow: hidden;
         }
 
-        /* Container */
+        /* Overlay hitam untuk klik awal */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        /* Container utama */
         .container {
             background: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            display: none; /* Disembunyikan awalnya */
         }
 
         /* Judul */
@@ -60,7 +79,14 @@
     </style>
 </head>
 <body>
-    <div class="container">
+
+    <!-- Overlay awal -->
+    <div class="overlay" id="overlay">
+        Klik untuk memulai
+    </div>
+
+    <!-- Container utama -->
+    <div class="container" id="main-content">
         <h1>Game Tebak Kosakata Kucing</h1>
         <button class="play-button" id="start-button">Mulai Permainan</button>
     </div>
@@ -70,10 +96,8 @@
     </audio>
 
     <script>
-        document.getElementById("start-button").addEventListener("click", () => {
+        document.getElementById("overlay").addEventListener("click", function() {
             let audio = document.getElementById("bg-music");
-
-            // Coba putar musik
             let playPromise = audio.play();
 
             if (playPromise !== undefined) {
@@ -84,11 +108,18 @@
                 });
             }
 
-            // Arahkan ke halaman kedua
-            setTimeout(() => {
-                window.location.href = "game.html"; // Ganti dengan nama file halaman kedua
-            }, 500); // Delay sebentar agar musik mulai dulu
+            // Hilangkan overlay
+            this.style.display = "none";
+
+            // Tampilkan konten utama
+            document.getElementById("main-content").style.display = "block";
+        });
+
+        // Event untuk tombol mulai permainan
+        document.getElementById("start-button").addEventListener("click", function() {
+            window.location.href = "game.html"; // Ganti dengan halaman berikutnya
         });
     </script>
+
 </body>
 </html>
