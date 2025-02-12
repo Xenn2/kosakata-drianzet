@@ -57,65 +57,6 @@
         }  
   
         #hasil {  
-            font-size: <!DOCTYPE html>  
-<html lang="id">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Tebak Kosakata - Bab 4</title>  
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">  
-    <style>  
-        body {   
-            font-family: 'Bangers', cursive;  
-            text-align: center;  
-            background: url('https://i.postimg.cc/BZrhgp7y/b888b163e0277f3b0552077ef976e416.jpg') no-repeat center center fixed;  
-            background-size: cover;  
-        }  
-  
-        .container {  
-            background: rgba(245, 214, 163, 0.9);  
-            padding: 30px;  
-            border-radius: 20px;  
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);  
-            max-width: 500px;  
-            width: 90%;  
-            margin: auto;  
-            border: 6px solid #d69c50;  
-            margin-top: 50px;  
-        }  
-  
-        .question-box {  
-            background: #d69c50;  
-            color: white;  
-            padding: 18px;  
-            border-radius: 20px;  
-            font-size: 20px;  
-            font-weight: bold;  
-            margin-bottom: 20px;  
-        }  
-  
-        .btn {  
-            padding: 12px 20px;  
-            font-size: 16px;  
-            cursor: pointer;  
-            border-radius: 50px;  
-            margin: 5px;  
-            font-weight: bold;  
-            background: #ff9800;  
-            color: white;  
-            border: 3px solid #e67e22;  
-            transition: all 0.3s;  
-            display: block;  
-            width: 80%;  
-            margin: 10px auto;  
-        }  
-  
-        .btn:hover {  
-            background: #e67e22;  
-            transform: scale(1.1);  
-        }  
-  
-        #hasil {  
             font-size: 22px;  
             margin-top: 15px;  
             font-weight: bold;  
@@ -150,7 +91,6 @@
         let soalTersisa = [];  
 
         const soal = [
-    { peconst soal = [
     { pertanyaan: "Selamat pagi", jawaban: "おはよう", opsi: ["こんにちは", "こんばんは", "おやすみ"] },
     { pertanyaan: "Selamat siang", jawaban: "こんにちは", opsi: ["おはよう", "こんばんは", "おやすみ"] },
     { pertanyaan: "Selamat malam", jawaban: "こんばんは", opsi: ["おはよう", "こんにちは", "おやすみ"] },
@@ -208,7 +148,7 @@
     <p>Nilai Akhir: ${benar} / ${totalSoal}</p>
     <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
 `;
-document.getElementById("nilaiAkhir").style.display = "block";
+document.getElementById("nilaiAkhir").style.display = "block";  
                 return;  
             }  
 
@@ -243,46 +183,3 @@ document.getElementById("nilaiAkhir").style.display = "block";
 
 </body>  
 </html>
-22px;  
-            margin-top: 15px;  
-            font-weight: bold;  
-            color: #7a4a26;  
-        }  
-  
-        #nilaiAkhir {  
-            font-size: 22px;  
-            margin-top: 15px;  
-            font-weight: bold;  
-            color: #7a4a26;  
-            display: none;  
-        }  
-    </style>  
-</head>  
-<body>  
-  
-    <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>  
-    <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>  
-  
-    <div class="container">  
-        <h1>🐱 Tebak Kosakata! 🐱</h1>  
-        <div class="question-box" id="pertanyaan">Memuat soal...</div>  
-        <div id="pilihan"></div>  
-        <div id="hasil"></div>  
-        <div id="nilaiAkhir"></div>  
-    </div>  
-  
-    <script>  
-        let benar = 0;  
-        let totalSoal = 34;  
-        let soalTersisa = [];  
-
-        const soal = [
-    { pertanyaan: "Bangun", jawaban: "おきる", opsi: ["ねる", "はたらく", "やすむ"] },
-    { pertanyaan: "Tidur", jawaban: "ねる", opsi: ["おきる", "べんきょうする", "やすむ"] },
-    { pertanyaan: "Bekerja", jawaban: "はたらく", opsi: ["おきる", "やすむ", "べんきょうする"] },
-    { pertanyaan: "Istirahat", jawaban: "やすむ", opsi: ["はたらく", "べんきょうする", "かえる"] },
-    { pertanyaan: "Belajar", jawaban: "べんきょうする", opsi: ["はたらく", "おきる", "かえる"] },
-    { pertanyaan: "Selesai", jawaban: "おわる", opsi: ["かえる", "べんきょうする", "やすむ"] },
-    { pertanyaan: "Toserba", jawaban: "デパート", opsi: ["がっこう", "ゆうびんきょく", "ぎんこう"] },
-    { pertanyaan: "Bank", jawaban: "ぎんこう", opsi: ["デパート", "としょかん", "びょういん"] },
-    { pertanyaan: "Kantor pos", jawaban: "ゆうびんきょく", opsi: ["デパート", "びょういん", "えき"] },
