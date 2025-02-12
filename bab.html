@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilih Bab Bosku</title>
+    <title>Pilih Bab Bro</title>
+
+    <!-- Google Font Bangers (Gaya Komik) -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -33,25 +37,50 @@
         }
 
         h1 {
-            color: #ffffff;
-            font-size: 28px;
-            margin-bottom: 20px;
+            font-family: 'Bangers', cursive;
+            font-size: 40px;
+            color: #ffcc00;
+            text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.7);
+            -webkit-text-stroke: 2px black;
         }
 
         .bab-button {
             display: block;
-            background: #ffcc00;
-            color: #333;
+            background: linear-gradient(135deg, #ffcc00, #ff8800);
+            color: white;
             text-decoration: none;
             padding: 15px;
-            font-size: 18px;
+            font-size: 22px;
+            font-family: 'Bangers', cursive;
+            letter-spacing: 1px;
             border-radius: 8px;
-            margin: 10px;
-            transition: 0.3s;
+            margin: 15px;
+            border: 3px solid #fff;
+            box-shadow: 4px 4px 0px #222;
+            transition: transform 0.3s ease-in-out, background 0.4s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .bab-button:hover {
-            background: #ffdb4d;
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #ff8800, #ffcc00);
+            box-shadow: 6px 6px 0px #111;
+        }
+
+        .bab-button::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            top: 0;
+            left: -100%;
+            transition: left 0.3s;
+        }
+
+        .bab-button:hover::after {
+            left: 100%;
         }
     </style>
 </head>
@@ -61,7 +90,7 @@
         <h1>PILIH BAB BRO</h1>
         <a href="bab1.html" class="bab-button">BAB 1</a>
         <a href="bab2.html" class="bab-button">BAB 2</a>
-        <a href="#" class="bab-button">BAB 3</a>
+        <a href="bab3.html" class="bab-button">BAB 3</a>
         <a href="game.html" class="bab-button">BAB 4</a>
     </div>
 
