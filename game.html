@@ -139,8 +139,11 @@
             if (soalTersisa.length === 0) {  
                 document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";  
                 document.getElementById("pilihan").innerHTML = "";  
-                document.getElementById("nilaiAkhir").innerText = `Benar: ${benar} / ${totalSoal}`;  
-                document.getElementById("nilaiAkhir").style.display = "block";  
+                document.getElementById("nilaiAkhir").innerHTML = `
+    <p>Nilai Akhir: ${benar} / ${totalSoal}</p>
+    <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
+`;
+document.getElementById("nilaiAkhir").style.display = "block";
                 return;  
             }  
 
