@@ -1,0 +1,195 @@
+<!DOCTYPE html>  
+<html lang="id">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Tebak Kosakata - Bab 4</title>  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">  
+    <style>  
+        body {   
+            font-family: 'Bangers', cursive;  
+            text-align: center;  
+            background: url('https://i.postimg.cc/BZrhgp7y/b888b163e0277f3b0552077ef976e416.jpg') no-repeat center center fixed;  
+            background-size: cover;  
+        }  
+  
+        .container {  
+            background: rgba(245, 214, 163, 0.9);  
+            padding: 30px;  
+            border-radius: 20px;  
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);  
+            max-width: 500px;  
+            width: 90%;  
+            margin: auto;  
+            border: 6px solid #d69c50;  
+            margin-top: 50px;  
+        }  
+  
+        .question-box {  
+            background: #d69c50;  
+            color: white;  
+            padding: 18px;  
+            border-radius: 20px;  
+            font-size: 20px;  
+            font-weight: bold;  
+            margin-bottom: 20px;  
+        }  
+  
+        .btn {  
+            padding: 12px 20px;  
+            font-size: 16px;  
+            cursor: pointer;  
+            border-radius: 50px;  
+            margin: 5px;  
+            font-weight: bold;  
+            background: #ff9800;  
+            color: white;  
+            border: 3px solid #e67e22;  
+            transition: all 0.3s;  
+            display: block;  
+            width: 80%;  
+            margin: 10px auto;  
+        }  
+  
+        .btn:hover {  
+            background: #e67e22;  
+            transform: scale(1.1);  
+        }  
+  
+        #hasil {  
+            font-size: 22px;  
+            margin-top: 15px;  
+            font-weight: bold;  
+            color: #7a4a26;  
+        }  
+  
+        #nilaiAkhir {  
+            font-size: 22px;  
+            margin-top: 15px;  
+            font-weight: bold;  
+            color: #7a4a26;  
+            display: none;  
+        }  
+    </style>  
+</head>  
+<body>  
+  
+    <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>  
+    <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>  
+  
+    <div class="container">  
+        <h1>🐱 Tebak Kosakata! 🐱</h1>  
+        <div class="question-box" id="pertanyaan">Memuat soal...</div>  
+        <div id="pilihan"></div>  
+        <div id="hasil"></div>  
+        <div id="nilaiAkhir"></div>  
+    </div>  
+  
+    <script>  
+        let benar = 0;  
+        let totalSoal = 34;  
+        let soalTersisa = [];  
+
+        const soal = [
+    { pertanyaan: "Buku", jawaban: "ほん", opsi: ["えんぴつ", "かぎ", "つくえ"] },
+    { pertanyaan: "Majalah", jawaban: "ざっし", opsi: ["しんぶん", "てちょう", "ノート"] },
+    { pertanyaan: "Koran", jawaban: "しんぶん", opsi: ["ざっし", "ノート", "つくえ"] },
+    { pertanyaan: "Buku catatan", jawaban: "ノート", opsi: ["ざっし", "しんぶん", "えんぴつ"] },
+    { pertanyaan: "Buku catatan saku", jawaban: "てちょう", opsi: ["ノート", "かぎ", "えんぴつ"] },
+    { pertanyaan: "Kartu nama", jawaban: "めいし", opsi: ["かみ", "えんぴつ", "つくえ"] },
+    { pertanyaan: "Kartu", jawaban: "カード", opsi: ["めいし", "えんぴつ", "かぎ"] },
+    { pertanyaan: "Pensil", jawaban: "えんぴつ", opsi: ["ボールペン", "シャープペンシル", "ほん"] },
+    { pertanyaan: "Bolpoin", jawaban: "ボールペン", opsi: ["えんぴつ", "シャープペンシル", "ざっし"] },
+    { pertanyaan: "Pensil mekanik", jawaban: "シャープペンシル", opsi: ["ボールペン", "えんぴつ", "ほん"] },
+    { pertanyaan: "Kunci", jawaban: "かぎ", opsi: ["めいし", "カード", "つくえ"] },
+    { pertanyaan: "Jam tangan", jawaban: "とけい", opsi: ["かぎ", "つくえ", "いす"] },
+    { pertanyaan: "Payung", jawaban: "かさ", opsi: ["とけい", "つくえ", "いす"] },
+    { pertanyaan: "Tas", jawaban: "かばん", opsi: ["かさ", "とけい", "ほん"] },
+    { pertanyaan: "Kursi", jawaban: "いす", opsi: ["つくえ", "かぎ", "かさ"] },
+    { pertanyaan: "Meja", jawaban: "つくえ", opsi: ["いす", "ほん", "シャープペンシル"] },
+    { pertanyaan: "Televisi", jawaban: "テレビ", opsi: ["ラジオ", "コンピューター", "つくえ"] },
+    { pertanyaan: "Radio", jawaban: "ラジオ", opsi: ["テレビ", "コンピューター", "ほん"] },
+    { pertanyaan: "Komputer", jawaban: "コンピューター", opsi: ["テレビ", "ラジオ", "ノート"] },
+    { pertanyaan: "Mobil", jawaban: "くるま", opsi: ["じてんしゃ", "バイク", "ほん"] },
+    { pertanyaan: "Sepeda", jawaban: "じてんしゃ", opsi: ["くるま", "バイク", "つくえ"] },
+    { pertanyaan: "Motor", jawaban: "バイク", opsi: ["くるま", "じてんしゃ", "えんぴつ"] },
+    { pertanyaan: "Telepon", jawaban: "でんわ", opsi: ["じてんしゃ", "バイク", "くるま"] },
+    { pertanyaan: "Rokok", jawaban: "たばこ", opsi: ["ざっし", "しんぶん", "かばん"] },
+    { pertanyaan: "Meja tulis", jawaban: "つくえ", opsi: ["いす", "ほん", "シャープペンシル"] },
+    { pertanyaan: "Bahasa Jepang", jawaban: "にほんご", opsi: ["えいご", "ちゅうごくご", "ほん"] },
+    { pertanyaan: "Bahasa Inggris", jawaban: "えいご", opsi: ["にほんご", "ちゅうごくご", "ざっし"] },
+    { pertanyaan: "Bahasa Cina", jawaban: "ちゅうごくご", opsi: ["えいご", "にほんご", "ほん"] },
+    { pertanyaan: "Bahasa Indonesia", jawaban: "インドネシアご", opsi: ["えいご", "にほんご", "ちゅうごくご"] },
+    { pertanyaan: "Hadiah", jawaban: "プレゼント", opsi: ["かばん", "えんぴつ", "かさ"] },
+    { pertanyaan: "Oleh-oleh", jawaban: "おみやげ", opsi: ["プレゼント", "ほん", "つくえ"] },
+    { pertanyaan: "Apa?", jawaban: "なん", opsi: ["どこ", "だれ", "いつ"] },
+    { pertanyaan: "Begitu ya", jawaban: "そうですか", opsi: ["なんですか", "そうですね", "しつれいします"] },
+    { pertanyaan: "Terima kasih banyak", jawaban: "どうもありがとう", opsi: ["ありがとう", "おねがいします", "すみません"] },
+    { pertanyaan: "Terima kasih", jawaban: "ありがとう", opsi: ["すみません", "ごめんなさい", "しつれいします"] },
+    { pertanyaan: "Maaf", jawaban: "すみません", opsi: ["ありがとう", "おねがいします", "ごめんなさい"] },
+    { pertanyaan: "Tolong", jawaban: "おねがいします", opsi: ["ありがとう", "すみません", "しつれいします"] },
+    { pertanyaan: "Silakan", jawaban: "どうぞ", opsi: ["ありがとう", "すみません", "おねがいします"] },
+    { pertanyaan: "Saya mengerti", jawaban: "わかりました", opsi: ["わかりません", "しりません", "すみません"] },
+    { pertanyaan: "Saya tidak mengerti", jawaban: "わかりません", opsi: ["わかりました", "しりません", "すみません"] },
+    { pertanyaan: "Itu berbeda", jawaban: "ちがいます", opsi: ["わかりました", "しりません", "すみません"] },
+    { pertanyaan: "Ini", jawaban: "これ", opsi: ["それ", "あれ", "どれ"] },
+    { pertanyaan: "Itu (dekat lawan bicara)", jawaban: "それ", opsi: ["これ", "あれ", "どれ"] },
+    { pertanyaan: "Itu (jauh dari pembicara dan lawan bicara)", jawaban: "あれ", opsi: ["これ", "それ", "どれ"] },
+    { pertanyaan: "Yang mana?", jawaban: "どれ", opsi: ["これ", "それ", "あれ"] },
+    { pertanyaan: "Barang", jawaban: "もの", opsi: ["つくえ", "かばん", "いす"] },
+    { pertanyaan: "Ya", jawaban: "はい", opsi: ["いいえ", "わかりました", "しりません"] },
+    { pertanyaan: "Tidak", jawaban: "いいえ", opsi: ["はい", "わかりました", "しりません"] }
+];
+
+        function acakArray(array) {  
+            return array.sort(() => Math.random() - 0.5);  
+        }  
+
+        function mulaiSoal() {  
+            soalTersisa = [...soal];  
+            tampilkanSoal();  
+        }  
+
+        function tampilkanSoal() {  
+            if (soalTersisa.length === 0) {  
+                document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";  
+                document.getElementById("pilihan").innerHTML = "";  
+                document.getElementById("nilaiAkhir").innerHTML = `
+    <p>Nilai Akhir: ${benar} / ${totalSoal}</p>
+    <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
+`;
+document.getElementById("nilaiAkhir").style.display = "block";
+                return;  
+            }  
+
+            let soalSekarang = soalTersisa.shift();  
+            document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;  
+            document.getElementById("hasil").innerText = "";  
+
+            let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);  
+
+            let pilihanHTML = "";  
+            pilihan.forEach(pilihan => {  
+                pilihanHTML += `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;  
+            });  
+
+            document.getElementById("pilihan").innerHTML = pilihanHTML;  
+        }  
+
+        function cekJawaban(pilihan, jawaban) {  
+            if (pilihan === jawaban) {  
+                benar++;  
+                document.getElementById("hasil").innerText = "✅ Benar!";  
+                document.getElementById("correctSound").play();  
+            } else {  
+                document.getElementById("hasil").innerText = "❌ Salah!";  
+                document.getElementById("wrongSound").play();  
+            }  
+            setTimeout(tampilkanSoal, 1000);  
+        }  
+
+        mulaiSoal();  
+    </script>  
+
+</body>  
+  </html>
