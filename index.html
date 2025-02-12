@@ -46,6 +46,30 @@
     </style>
 </head>
 <body>
+<audio id="bg-music" autoplay loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        let audio = document.getElementById("bg-music");
+
+        // Coba play otomatis
+        let playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log("Autoplay berhasil!");
+            }).catch(() => {
+                console.log("Autoplay diblokir, menunggu interaksi pengguna...");
+                document.addEventListener("click", () => {
+                    audio.play();
+                }, { once: true });
+            });
+        }
+    });
+</script>
+    
     <div class="container">
         <h1>Selamat Datang di Game Tebak Kosakata Kucing!</h1>
         <p>Uji kemampuanmu dalam mengenal kosakata bahasa Jepang!</p>
