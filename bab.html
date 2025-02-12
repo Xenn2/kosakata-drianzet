@@ -3,20 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilih Bab Portal</title>
+    <title>Pilih Bab Kartu</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        @keyframes pulse {
-            0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
-            50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(255, 255, 255, 1); }
-            100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 255, 255, 0.6); }
-        }
-
-        @keyframes backgroundFlicker {
-            0% { background-color: #050505; }
-            50% { background-color: #0a0a0a; }
-            100% { background-color: #050505; }
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+            50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+            100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
         }
 
         body {
@@ -28,48 +22,52 @@
             text-align: center;
             font-family: 'Press Start 2P', cursive;
             overflow: hidden;
-            animation: backgroundFlicker 2s infinite alternate;
         }
 
         .container {
             display: flex;
-            gap: 40px;
+            gap: 20px;
         }
 
-        .portal {
+        .card {
             width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2), rgba(0, 0, 0, 0.8));
-            border-radius: 50%;
+            height: 200px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.3));
+            border-radius: 10px;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            font-size: 18px;
+            justify-content: center;
+            font-size: 16px;
             color: white;
             text-decoration: none;
-            border: 4px solid white;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-            animation: pulse 1.5s infinite alternate;
-            transition: 0.3s ease;
-        }
-
-        .portal:hover {
-            transform: scale(1.2);
-            box-shadow: 0 0 40px rgba(255, 255, 255, 1);
-        }
-
-        .portal:active {
-            transform: scale(0.9);
-        }
-
-        .portal-1 { background: rgba(255, 0, 0, 0.6); border-color: red; }
-        .portal-2 { background: rgba(0, 0, 255, 0.6); border-color: blue; }
-        .portal-3 { background: rgba(0, 255, 0, 0.6); border-color: lime; }
-        .portal-4 { background: rgba(255, 255, 0, 0.6); border-color: yellow; }
-
-        .portal span {
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: 0.3s ease-in-out;
             position: relative;
-            z-index: 2;
+            overflow: hidden;
+            cursor: pointer;
+            animation: glow 2s infinite alternate;
+        }
+
+        .card:hover {
+            transform: scale(1.1) rotate(3deg);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 1);
+        }
+
+        .card img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .card-1 { border-color: red; }
+        .card-2 { border-color: blue; }
+        .card-3 { border-color: green; }
+        .card-4 { border-color: yellow; }
+
+        .card:active {
+            transform: scale(0.9);
         }
 
         audio {
@@ -79,20 +77,32 @@
 </head>
 <body>
 
-    <audio id="teleportSound" src="https://www.fesliyanstudios.com/play-mp3/4397"></audio>
+    <audio id="clickSound" src="https://www.fesliyanstudios.com/play-mp3/4397"></audio>
 
     <div class="container">
-        <a href="bab1.html" class="portal portal-1" onclick="playTeleportSound()"><span>BAB 1</span></a>
-        <a href="bab2.html" class="portal portal-2" onclick="playTeleportSound()"><span>BAB 2</span></a>
-        <a href="#" class="portal portal-3" onclick="playTeleportSound()"><span>BAB 3</span></a>
-        <a href="game.html" class="portal portal-4" onclick="playTeleportSound()"><span>BAB 4</span></a>
+        <a href="bab1.html" class="card card-1" onclick="playClickSound()">
+            <img src="https://cdn-icons-png.flaticon.com/512/2729/2729029.png" alt="Bab 1">
+            <span>BAB 1</span>
+        </a>
+        <a href="bab2.html" class="card card-2" onclick="playClickSound()">
+            <img src="https://cdn-icons-png.flaticon.com/512/2729/2729038.png" alt="Bab 2">
+            <span>BAB 2</span>
+        </a>
+        <a href="#" class="card card-3" onclick="playClickSound()">
+            <img src="https://cdn-icons-png.flaticon.com/512/2729/2729066.png" alt="Bab 3">
+            <span>BAB 3</span>
+        </a>
+        <a href="game.html" class="card card-4" onclick="playClickSound()">
+            <img src="https://cdn-icons-png.flaticon.com/512/2729/2729046.png" alt="Bab 4">
+            <span>BAB 4</span>
+        </a>
     </div>
 
     <script>
-        function playTeleportSound() {
-            document.getElementById('teleportSound').play();
+        function playClickSound() {
+            document.getElementById('clickSound').play();
         }
     </script>
 
 </body>
-</html>
+            </html>
