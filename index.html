@@ -50,6 +50,10 @@
     <source src="epep.mp3" type="audio/mpeg">
 </audio>
 
+<audio id="bg-music" loop>
+    <source src="epep.mp3" type="audio/mpeg">
+</audio>
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         let audio = document.getElementById("bg-music");
@@ -62,6 +66,8 @@
                 console.log("Autoplay berhasil!");
             }).catch(() => {
                 console.log("Autoplay diblokir, menunggu interaksi pengguna...");
+                
+                // Paksa play setelah interaksi pertama
                 document.addEventListener("click", () => {
                     audio.play();
                 }, { once: true });
