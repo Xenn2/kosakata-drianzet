@@ -4,153 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pilih Bab</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-image: url('https://i.postimg.cc/fLN0WvLd/06316f962772c8ad226d0f6d135e2803.jpg'); /* Ganti dengan background bertema */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            width: 80%;
-            max-width: 600px;
-            height: 300px;
-        }
-
-        .card-container {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .card {
-            position: relative;
-            width: 150px;
-            height: 220px;
-            margin: 0 15px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-            transition: 0.3s;
-            overflow: hidden;
-            border: 3px solid transparent;
-        }
-
-        /* Efek light saber */
-        .card::before {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            border-radius: 10px;
-            box-shadow: 0 0 20px #00f, 0 0 40px #00f, 0 0 60px #00f;
-            opacity: 0.8;
-            z-index: -1;
-        }
-
-        .card:hover {
-            transform: scale(1.1);
-        }
-
-        /* Tombol navigasi */
-        .arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 30px;
-            color: white;
-            cursor: pointer;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 10px;
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-
-        .arrow:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .left {
-            left: -50px;
-        }
-
-        .right {
-            right: -50px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="container">
-        <div class="arrow left" onclick="moveLeft()">&#9665;</div>
-        <div class="card-container" id="carousel">
-            <a href="bab1.html" class="card">BAB 1</a>
-            <a href="bab2.html" class="card">BAB 2</a>
-            <a href="bab3.html" class="card">BAB 3</a>
-            <a href="game.html" class="card">BAB 4</a>
+        <div class="card-track">
+            <div class="card" onclick="selectChapter(1)" data-color="blue">
+                <span>BAB 1</span>
+                <img src="icon1.png" alt="Ikon Bab 1">
+            </div>
+            <div class="card" onclick="selectChapter(2)" data-color="red">
+                <span>BAB 2</span>
+                <img src="icon2.png" alt="Ikon Bab 2">
+            </div>
+            <div class="card" onclick="selectChapter(3)" data-color="green">
+                <span>BAB 3</span>
+                <img src="icon3.png" alt="Ikon Bab 3">
+            </div>
+            <div class="card" onclick="selectChapter(4)" data-color="yellow">
+                <span>BAB 4</span>
+                <img src="icon4.png" alt="Ikon Bab 4">
+            </div>
         </div>
-        <div class="arrow right" onclick="moveRight()">&#9655;</div>
     </div>
-
-    <script>
-        let index = 0;
-        const cards = document.querySelectorAll('.card');
-        const carousel = document.getElementById('carousel');
-
-        function moveLeft() {
-            if (index > 0) {
-                index--;
-            } else {
-                index = cards.length - 1;
-            }
-            updateCarousel();
-        }
-
-        function moveRight() {
-            if (index < cards.length - 1) {
-                index++;
-            } else {
-                index = 0;
-            }
-            updateCarousel();
-        }
-
-        function updateCarousel() {
-            const offset = -index * 180; 
-            carousel.style.transform = `translateX(${offset}px)`;
-        }
-
-        // Animasi otomatis bergerak bolak-balik
-        setInterval(() => {
-            moveRight();
-        }, 3000);
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
