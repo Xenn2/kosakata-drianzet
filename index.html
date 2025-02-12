@@ -46,11 +46,7 @@
     </style>
 </head>
 <body>
-<audio id="bg-music" autoplay loop>
-    <source src="epep.mp3" type="audio/mpeg">
-</audio>
-
-<audio id="bg-music" loop>
+<audio id="bg-music" muted loop>
     <source src="epep.mp3" type="audio/mpeg">
 </audio>
 
@@ -58,17 +54,17 @@
     document.addEventListener("DOMContentLoaded", () => {
         let audio = document.getElementById("bg-music");
 
-        // Coba play otomatis
         let playPromise = audio.play();
 
         if (playPromise !== undefined) {
             playPromise.then(() => {
                 console.log("Autoplay berhasil!");
+                audio.muted = false; // Setelah diputar, nonaktifkan mute
             }).catch(() => {
                 console.log("Autoplay diblokir, menunggu interaksi pengguna...");
                 
-                // Paksa play setelah interaksi pertama
                 document.addEventListener("click", () => {
+                    audio.muted = false;
                     audio.play();
                 }, { once: true });
             });
