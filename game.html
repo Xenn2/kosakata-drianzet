@@ -3,182 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tebak Kosakata - Tema Kucing 🐱</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
+    <title>Game Kosakata Bab 4</title>
     <style>
-        body { 
-            font-family: 'Bangers', cursive;
+        body {
+            font-family: Arial, sans-serif;
             text-align: center;
-            background: url('https://i.postimg.cc/BZrhgp7y/b888b163e0277f3b0552077ef976e416.jpg') no-repeat center center fixed;
+            background: url('https://raw.githubusercontent.com/Xenn2/kosakata-drianzet/main/b888b163e0277f3b0552077ef976e416.jpg') no-repeat center center fixed;
             background-size: cover;
-        }
-
-        .container {
-            background: rgba(245, 214, 163, 0.9);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-            margin: auto;
-            border: 6px solid #d69c50;
-            margin-top: 50px;
-        }
-
-        .question-box {
-            background: #d69c50;
             color: white;
-            padding: 18px;
-            border-radius: 20px;
-            font-size: 20px;
-            font-weight: bold;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 500px;
+            margin: 50px auto;
+        }
+        h1 {
+            font-size: 24px;
             margin-bottom: 20px;
         }
-
-        .btn {
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 50px;
+        .question {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .options button {
+            background: #ffcc00;
+            color: #333;
+            border: none;
+            padding: 10px 20px;
             margin: 5px;
-            font-weight: bold;
-            background: #ff9800;
-            color: white;
-            border: 3px solid #e67e22;
-            transition: all 0.3s;
-            display: block;
-            width: 80%;
-            margin: 10px auto;
-        }
-
-        .btn:hover {
-            background: #e67e22;
-            transform: scale(1.1);
-        }
-
-        #loading {
-            display: none;
-            width: 250px;
-            margin: 20px auto;
-        }
-
-        #hasil {
-            font-size: 22px;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #7a4a26;
-        }
-
-        #skor {
+            border-radius: 5px;
+            cursor: pointer;
             font-size: 18px;
+            transition: background 0.3s;
+        }
+        .options button:hover {
+            background: #e6b800;
+        }
+        #feedback {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        #score {
             margin-top: 10px;
-            font-weight: bold;
-            color: #7a4a26;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-
-    <audio id="thinkingSound" src="https://www.fesliyanstudios.com/play-mp3/6518"></audio>
-    <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>
-    <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>
-
     <div class="container">
-        <h1>🐱 Tebak Kosakata! 🐱</h1>
-        <div class="question-box" id="pertanyaan">Memuat soal...</div>
-        <img id="loading" src="https://i.postimg.cc/ZRWpSw0Y/Cute-cat-loading-bar-animation-unscreen-1.gif" alt="Loading">
-        <div id="pilihan"></div>
-        <div id="hasil"></div>
-        <div id="skor">Skor: <span id="nilai">0</span></div>
+        <h1>Game Kosakata Bab 4</h1>
+        <div class="question" id="question">Memuat soal...</div>
+        <div class="options" id="options"></div>
+        <div id="feedback"></div>
+        <div id="score">Skor: <span id="score-value">0</span></div>
     </div>
 
     <script>
-        let skor = 0;
-        let soalTersisa = [];
-
-        const soal = [
-            { pertanyaan: "Apa bahasa Jepang dari 'Bangun'?", jawaban: "Okiru", opsi: ["Nemuru", "Hataraku", "Kyūkei"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Tidur'?", jawaban: "Nemuru", opsi: ["Okiru", "Benkyou suru", "Kyūkei"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Bekerja'?", jawaban: "Hataraku", opsi: ["Okiru", "Yasumu", "Gakkō"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Beristirahat, Libur'?", jawaban: "Yasumu", opsi: ["Hataraku", "Benkyou suru", "Toshokan"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Belajar'?", jawaban: "Benkyou suru", opsi: ["Hataraku", "Okiru", "Kaeru"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Selesai'?", jawaban: "Owaru", opsi: ["Kaeru", "Benkyou suru", "Yasumu"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Toserba'?", jawaban: "Depāto", opsi: ["Gakkō", "Yūbinkyoku", "Ginkō"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Bank'?", jawaban: "Ginkō", opsi: ["Depāto", "Toshokan", "Gakkō"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Kantor Pos'?", jawaban: "Yūbinkyoku", opsi: ["Depāto", "Byōin", "Eki"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Perpustakaan'?", jawaban: "Toshokan", opsi: ["Byōin", "Depāto", "Eki"] }
+        const questions = [
+            { question: "Apa bahasa Jepang untuk 'Bangun'?", answer: "おきます", options: ["ねます", "はたらきます", "やすみます"] },
+            { question: "Apa bahasa Jepang untuk 'Tidur'?", answer: "ねます", options: ["おきます", "べんきょうします", "おわります"] },
+            { question: "Apa bahasa Jepang untuk 'Bekerja'?", answer: "はたらきます", options: ["やすみます", "べんきょうします", "おわります"] },
+            { question: "Apa bahasa Jepang untuk 'Beristirahat'?", answer: "やすみます", options: ["はたらきます", "おきます", "ねます"] },
+            { question: "Apa bahasa Jepang untuk 'Belajar'?", answer: "べんきょうします", options: ["おわります", "はたらきます", "やすみます"] },
+            { question: "Apa bahasa Jepang untuk 'Selesai'?", answer: "おわります", options: ["べんきょうします", "おきます", "ねます"] },
+            { question: "Apa bahasa Jepang untuk 'Toserba'?", answer: "デパート", options: ["ぎんこう", "ゆうびんきょく", "としょかん"] },
+            { question: "Apa bahasa Jepang untuk 'Bank'?", answer: "ぎんこう", options: ["デパート", "びじゅつかん", "としょかん"] },
+            { question: "Apa bahasa Jepang untuk 'Kantor Pos'?", answer: "ゆうびんきょく", options: ["ぎんこう", "デパート", "びじゅつかん"] },
+            { question: "Apa bahasa Jepang untuk 'Perpustakaan'?", answer: "としょかん", options: ["デパート", "ぎんこう", "ゆうびんきょく"] },
+            { question: "Apa bahasa Jepang untuk 'Gedung Kesenian'?", answer: "びじゅつかん", options: ["としょかん", "デパート", "ぎんこう"] },
+            { question: "Apa bahasa Jepang untuk 'Sekarang'?", answer: "いま", options: ["きょう", "あした", "きのう"] },
+            { question: "Apa bahasa Jepang untuk 'Jam'?", answer: "じ", options: ["ふん", "はん", "びょう"] },
+            { question: "Apa bahasa Jepang untuk 'Menit'?", answer: "ふん", options: ["じ", "はん", "びょう"] },
+            { question: "Apa bahasa Jepang untuk 'Setengah'?", answer: "はん", options: ["じ", "ふん", "びょう"] },
+            { question: "Apa bahasa Jepang untuk 'Jam berapa'?", answer: "なんじ", options: ["なんぷん", "なんびょう", "なんねん"] },
+            { question: "Apa bahasa Jepang untuk 'Berapa menit'?", answer: "なんぷん", options: ["なんじ", "なんびょう", "なんねん"] },
+            { question: "Apa bahasa Jepang untuk 'Pagi'?", answer: "ごぜん", options: ["ごご", "あさ", "ひる"] },
+            { question: "Apa bahasa Jepang untuk 'Siang'?", answer: "ひる", options: ["ごぜん", "ごご", "あさ"] },
+            { question: "Apa bahasa Jepang untuk 'Malam'?", answer: "ばん", options: ["よる", "あさ", "ひる"] }
         ];
 
-        function acakArray(array) {
+        let score = 0;
+        let remainingQuestions = [...questions];
+
+        function shuffleArray(array) {
             return array.sort(() => Math.random() - 0.5);
         }
 
-        function mulaiSoal() {
-            soalTersisa = [...soal];
-            tampilkanSoal();
-        }
-
-        function tampilkanSoal() {
-            if (soalTersisa.length === 0) {
-                document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";
-                document.getElementById("pilihan").innerHTML = "";
+        function displayQuestion() {
+            if (remainingQuestions.length === 0) {
+                document.getElementById("question").innerText = "🎉 Semua soal selesai!";
+                document.getElementById("options").innerHTML = "";
                 return;
             }
 
-            let indeksAcak = Math.floor(Math.random() * soalTersisa.length);
-            let soalSekarang = soalTersisa.splice(indeksAcak, 1)[0];
+            let randomIndex = Math.floor(Math.random() * remainingQuestions.length);
+            let currentQuestion = remainingQuestions.splice(randomIndex, 1)[0];
 
-            document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;
-            document.getElementById("hasil").innerText = "";
-            document.getElementById("loading").style.display = "none";
-            
-            let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);
+            document.getElementById("question").innerText = currentQuestion.question;
+            document.getElementById("feedback").innerText = "";
 
-            let pilihanHTML = "";
-            pilihan.forEach(pilihan => {
-                pilihanHTML += `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;
+            let choices = shuffleArray([currentQuestion.answer, ...currentQuestion.options]);
+
+            let optionsHTML = "";
+            choices.forEach(choice => {
+                optionsHTML += `<button onclick="checkAnswer('${choice}', '${currentQuestion.answer}')">${choice}</button>`;
             });
 
-            document.getElementById("pilihan").innerHTML = pilihanHTML;
+            document.getElementById("options").innerHTML = optionsHTML;
         }
 
-        function cekJawaban(pilihan, jawaban) {
-            document.getElementById("loading").style.display = "block";
-            document.getElementById("pilihan").innerHTML = "";
-            document.getElementById("hasil").innerText = "";
-            
-            let thinkingSound = document.getElementById("thinkingSound");
-            let correctSound = document.getElementById("correctSound");
-            let wrongSound = document.getElementById("wrongSound");
+        function checkAnswer(selected, correct) {
+            if (selected === correct) {
+                score += 10;
+                document.getElementById("feedback").innerText = "✅ Benar!";
+            } else {
+                document.getElementById("feedback").innerText = "❌ Salah!";
+            }
 
-            thinkingSound.currentTime = 0;
-            thinkingSound.play();
-
-            setTimeout(() => {
-                document.getElementById("loading").style.display = "none";
-                thinkingSound.pause();
-                thinkingSound.currentTime = 0;
-
-                if (pilihan === jawaban) {
-                    skor += 10;
-                    document.getElementById("nilai").innerText = skor;
-                    document.getElementById("hasil").innerText = "✅ Benar!";
-                    correctSound.currentTime = 0;
-                    correctSound.play();
-                } else {
-                    document.getElementById("hasil").innerText = "❌ Salah!";
-                    wrongSound.currentTime = 0;
-                    wrongSound.play();
-                }
-
-                setTimeout(() => {
-                    tampilkanSoal();
-                }, 1700);
-            }, 1000);
+            document.getElementById("score-value").innerText = score;
+            setTimeout(displayQuestion, 1500);
         }
 
-        mulaiSoal();
+        displayQuestion();
     </script>
-
 </body>
-    </html>
+</html>
