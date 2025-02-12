@@ -3,115 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilih Bab</title>
+    <title>Pilih Bab Bro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <style>
-        /* Background Styling */
-        body {
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        @keyframes vibrate {
+            0% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+            100% { transform: rotate(-2deg); }
+        }
+
+        @keyframes zoomBlur {
+            0% { filter: blur(8px); transform: scale(1.1); }
+            100% { filter: blur(0px); transform: scale(1); }
+        }
+
+        @keyframes shine {
+            0% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 255, 255, 1); }
+            100% { box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+        }
+
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url('data:image/jpeg;base64,/9j/...') no-repeat center center fixed; /* Base64 Image */
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url('https://i.postimg.cc/fLN0WvLd/06316f962772c8ad226d0f6d135e2803.jpg');
             background-size: cover;
-            overflow: hidden;
-        }
-
-        /* Animasi Kartu Berjalan */
-        .card-container {
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
             display: flex;
-            gap: 20px;
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        @keyframes slide {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
-        .card {
-            width: 150px;
-            height: 200px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
+            align-items: center;
             text-align: center;
+            font-family: 'Bangers', cursive;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out, zoomBlur 1.5s ease-in-out;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 38px;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            text-shadow: 4px 4px 0px #222;
+            animation: vibrate 0.2s infinite alternate;
+        }
+
+        .bab-button {
+            display: block;
+            background: linear-gradient(135deg, #ffcc00, #ff8800);
+            color: white;
+            text-decoration: none;
+            padding: 18px 50px;
+            font-size: 28px;
+            letter-spacing: 1.5px;
+            border-radius: 15px;
+            margin: 15px auto;
+            border: 6px solid white;
+            box-shadow: 8px 8px 0px #222;
+            transition: all 0.3s ease-in-out;
             position: relative;
-            animation: slide 5s linear infinite;
+            width: 320px;
+            text-align: center;
+            overflow: hidden;
         }
 
-        /* Light Saber Effect */
-        .card::before {
+        .bab-button:hover {
+            background: linear-gradient(135deg, #ffdb4d, #ff6600);
+            transform: scale(1.15) rotate(2deg);
+            box-shadow: 10px 10px 0px #222;
+            animation: shine 1s infinite alternate;
+        }
+
+        .bab-button:active {
+            transform: scale(0.9);
+            box-shadow: 3px 3px 0px #111;
+        }
+
+        .bab-button::before {
             content: "";
             position: absolute;
-            width: 100%;
-            height: 5px;
-            top: 0;
-            left: 0;
-            background: linear-gradient(90deg, red, yellow, blue);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-            animation: glow 1s infinite alternate;
+            width: 300%;
+            height: 300%;
+            top: 50%;
+            left: 50%;
+            background: rgba(255, 255, 255, 0.4);
+            transform: translate(-50%, -50%) scale(0);
+            border-radius: 50%;
+            transition: transform 0.5s ease-out;
         }
 
-        .card::after {
-            content: "";
-            position: absolute;
-            width: 100%;
-            height: 5px;
-            bottom: 0;
-            left: 0;
-            background: linear-gradient(90deg, blue, yellow, red);
-            box-shadow: 0 0 10px rgba(0, 0, 255, 0.8);
-            animation: glow 1s infinite alternate-reverse;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); }
-            to { box-shadow: 0 0 20px rgba(255, 255, 255, 1); }
-        }
-
-        /* Icon di dalam Kartu */
-        .icon {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 10px;
+        .bab-button:active::before {
+            transform: translate(-50%, -50%) scale(1);
         }
     </style>
 </head>
 <body>
-    <div class="card-container">
-        <div class="card" onclick="openBab(1)">
-            <img src="data:image/png;base64,iVBORw0KGgoA..." class="icon"> <!-- Base64 Image -->
-            <span>BAB 1</span>
-        </div>
-        <div class="card" onclick="openBab(2)">
-            <img src="data:image/png;base64,iVBORw0KGgoA..." class="icon"> <!-- Base64 Image -->
-            <span>BAB 2</span>
-        </div>
-        <div class="card" onclick="openBab(3)">
-            <img src="data:image/png;base64,iVBORw0KGgoA..." class="icon"> <!-- Base64 Image -->
-            <span>BAB 3</span>
-        </div>
-        <div class="card" onclick="openBab(4)">
-            <img src="data:image/png;base64,iVBORw0KGgoA..." class="icon"> <!-- Base64 Image -->
-            <span>BAB 4</span>
-        </div>
+
+    <div class="container">
+        <h1>PILIH BAB BRO</h1>
+        <a href="bab1.html" class="bab-button" onclick="playClickSound()">BAB 1</a>
+        <a href="bab2.html" class="bab-button" onclick="playClickSound()">BAB 2</a>
+        <a href="#" class="bab-button" onclick="playClickSound()">BAB 3</a>
+        <a href="game.html" class="bab-button" onclick="playClickSound()">BAB 4</a>
     </div>
 
+    <audio id="clickSound" src="https://www.fesliyanstudios.com/play-mp3/387"></audio>
+
     <script>
-        function openBab(babNumber) {
-            window.location.href = `game_bab${babNumber}.html`;
+        function playClickSound() {
+            document.getElementById('clickSound').play();
         }
     </script>
+
 </body>
-                </html>
+</html>
