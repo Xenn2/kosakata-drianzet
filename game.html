@@ -1,185 +1,63 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tebak Kosakata - Tema Kucing 🐱</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&amp;display=swap">
+    <title>Game Kosakata Kucing</title>
     <style>
-        body { 
-            font-family: 'Bangers', cursive;
-            text-align: center;
-            background: url('https://i.postimg.cc/BZrhgp7y/b888b163e0277f3b0552077ef976e416.jpg') no-repeat center center fixed;
+        body {
+            background-image: url('https://raw.githubusercontent.com/Xenn2/kosakata-drianzet/main/b888b163e0277f3b0552077ef976e416.jpg');
             background-size: cover;
-        }
-
-        .container {
-            background: rgba(245, 214, 163, 0.9);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 90%;
-            margin: auto;
-            border: 6px solid #d69c50;
-            margin-top: 50px;
-        }
-
-        .question-box {
-            background: #d69c50;
+            background-position: center;
+            text-align: center;
             color: white;
-            padding: 18px;
-            border-radius: 20px;
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
         }
-
-        .btn {
-            padding: 12px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 50px;
-            margin: 5px;
-            font-weight: bold;
-            background: #ff9800;
-            color: white;
-            border: 3px solid #e67e22;
-            transition: all 0.3s;
-            display: block;
-            width: 80%;
-            margin: 10px auto;
-        }
-
-        .btn:hover {
-            background: #e67e22;
-            transform: scale(1.1);
-        }
-
-        #loading {
+        #loading-animation {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: none;
-            width: 250px;
-            margin: 20px auto;
+            width: 100px;
+            height: auto;
         }
-
-        #hasil {
-            font-size: 22px;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #7a4a26;
+        .question {
+            font-size: 24px;
+            margin-top: 20px;
         }
-
-        #skor {
+        .options button {
+            padding: 10px 20px;
             font-size: 18px;
-            margin-top: 10px;
-            font-weight: bold;
-            color: #7a4a26;
+            margin: 5px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
-
-    <audio id="thinkingSound" src="https://www.fesliyanstudios.com/play-mp3/6518"></audio>
-    <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>
-    <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>
-
-    <div class="container">
-        <h1>🐱 Tes Ilmu Brok! 🐱</h1>
-        <div class="question-box" id="pertanyaan">Memuat soal...</div>
-        <img id="loading" src="https://i.postimg.cc/ZRWpSw0Y/Cute-cat-loading-bar-animation-unscreen-1.gif" alt="Loading">
-        <div id="pilihan"></div>
-        <div id="hasil"></div>
-        <div id="skor">Skor: <span id="nilai">0</span></div>
+    <h1>Game Tebak Kosakata</h1>
+    <div class="question" id="question-text">Apa bahasa Jepang untuk "kucing"?</div>
+    <div class="options">
+        <button onclick="checkAnswer(this)">犬</button>
+        <button onclick="checkAnswer(this)">猫</button>
+        <button onclick="checkAnswer(this)">鳥</button>
+        <button onclick="checkAnswer(this)">魚</button>
     </div>
 
+    <img id="loading-animation" src="https://raw.githubusercontent.com/Xenn2/kosakata-drianzet/main/Cute-cat-loading-bar-animation.gif" alt="Loading...">
+
     <script>
-        let skor = 0;
-        let soalTersisa = [];
-
-        const soal = [
-            { pertanyaan: "Apa bahasa Jepang dari 'BAB'?", jawaban: "Ngis Hing", opsi: ["Nemuru", "Hataraku", "Kyūkei"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Katak'?", jawaban: "Blen thung", opsi: ["Nemuru", "Hataraku", "Kyūkei"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Tidur'?", jawaban: "Nemuru", opsi: ["Okiru", "Benkyou suru", "Kyūkei"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Bekerja'?", jawaban: "Hataraku", opsi: ["Okiru", "Yasumu", "Gakkō"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Beristirahat, Libur'?", jawaban: "Yasumu", opsi: ["Hataraku", "Benkyou suru", "Toshokan"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Belajar'?", jawaban: "Benkyou suru", opsi: ["Hataraku", "Okiru", "Kaeru"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Selesai'?", jawaban: "Owaru", opsi: ["Kaeru", "Benkyou suru", "Yasumu"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Toserba'?", jawaban: "Depāto", opsi: ["Gakkō", "Yūbinkyoku", "Ginkō"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Bank'?", jawaban: "Ginkō", opsi: ["Depāto", "Toshokan", "Gakkō"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Kantor Pos'?", jawaban: "Yūbinkyoku", opsi: ["Depāto", "Byōin", "Eki"] },
-            { pertanyaan: "Apa bahasa Jepang dari 'Perpustakaan'?", jawaban: "Toshokan", opsi: ["Byōin", "Depāto", "Eki"] }
-        ];
-
-        function acakArray(array) {
-            return array.sort(() => Math.random() - 0.5);
-        }
-
-        function mulaiSoal() {
-            soalTersisa = [...soal];
-            tampilkanSoal();
-        }
-
-        function tampilkanSoal() {
-            if (soalTersisa.length === 0) {
-                document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";
-                document.getElementById("pilihan").innerHTML = "";
-                return;
-            }
-
-            let indeksAcak = Math.floor(Math.random() * soalTersisa.length);
-            let soalSekarang = soalTersisa.splice(indeksAcak, 1)[0];
-
-            document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;
-            document.getElementById("hasil").innerText = "";
-            document.getElementById("loading").style.display = "none";
-            
-            let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);
-
-            let pilihanHTML = "";
-            pilihan.forEach(pilihan => {
-                pilihanHTML += `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;
-            });
-
-            document.getElementById("pilihan").innerHTML = pilihanHTML;
-        }
-
-        function cekJawaban(pilihan, jawaban) {
-            document.getElementById("loading").style.display = "block";
-            document.getElementById("pilihan").innerHTML = "";
-            document.getElementById("hasil").innerText = "";
-            
-            let thinkingSound = document.getElementById("thinkingSound");
-            let correctSound = document.getElementById("correctSound");
-            let wrongSound = document.getElementById("wrongSound");
-
-            thinkingSound.currentTime = 0;
-            thinkingSound.play();
-
+        function checkAnswer(button) {
+            document.getElementById("loading-animation").style.display = "block";
             setTimeout(() => {
-                document.getElementById("loading").style.display = "none";
-                thinkingSound.pause();
-                thinkingSound.currentTime = 0;
-
-                if (pilihan === jawaban) {
-                    skor += 10;
-                    document.getElementById("nilai").innerText = skor;
-                    document.getElementById("hasil").innerText = "✅ Benar!";
-                    correctSound.currentTime = 0;
-                    correctSound.play();
+                document.getElementById("loading-animation").style.display = "none";
+                if (button.innerText === "猫") {
+                    alert("Jawaban benar!");
                 } else {
-                    document.getElementById("hasil").innerText = "❌ Salah!";
-                    wrongSound.currentTime = 0;
-                    wrongSound.play();
+                    alert("Jawaban salah!");
                 }
-
-                setTimeout(() => {
-                    tampilkanSoal();
-                }, 1700);
-            }, 1000);
+            }, 2000);
         }
-
-        mulaiSoal();
     </script>
-
-
-</body></html>
+</body>
+    </html>
