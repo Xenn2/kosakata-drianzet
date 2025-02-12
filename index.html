@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kosakata Kucing</title>
     <style>
-        /* Reset margin & padding */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* Background halaman */
+        /* Background */
         body {
             background-image: url('https://i.postimg.cc/fLN0WvLd/06316f962772c8ad226d0f6d135e2803.jpg');
             background-size: cover;
@@ -26,22 +25,22 @@
             font-family: Arial, sans-serif;
         }
 
-        /* Container utama */
+        /* Container */
         .container {
-            background: rgba(0, 0, 0, 0.7); /* Latar belakang transparan */
+            background: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
-        /* Judul game */
+        /* Judul */
         h1 {
             color: #ffffff;
             font-size: 28px;
             margin-bottom: 20px;
         }
 
-        /* Tombol mulai */
+        /* Tombol */
         .play-button {
             display: inline-block;
             background: #ffcc00;
@@ -52,6 +51,7 @@
             border-radius: 8px;
             transition: 0.3s;
             cursor: pointer;
+            border: none;
         }
 
         .play-button:hover {
@@ -73,7 +73,7 @@
         document.getElementById("start-button").addEventListener("click", () => {
             let audio = document.getElementById("bg-music");
 
-            // Coba play musik saat tombol diklik
+            // Coba putar musik
             let playPromise = audio.play();
 
             if (playPromise !== undefined) {
@@ -83,6 +83,11 @@
                     console.log("Autoplay diblokir, menunggu interaksi pengguna...");
                 });
             }
+
+            // Arahkan ke halaman kedua
+            setTimeout(() => {
+                window.location.href = "game.html"; // Ganti dengan nama file halaman kedua
+            }, 500); // Delay sebentar agar musik mulai dulu
         });
     </script>
 </body>
