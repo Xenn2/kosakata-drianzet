@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mulai</title>
+    <title>テストの時間</title>
     <style>
         * {
             margin: 0;
@@ -12,26 +12,62 @@
             font-family: 'Poppins', sans-serif;
         }
         body {
-            background: #222;
+            background: url('background-japan.jpg') no-repeat center center/cover;
+            text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             color: white;
-            text-align: center;
-            cursor: pointer;
+            position: relative;
         }
         .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
             position: relative;
+            z-index: 2;
+        }
+        h1 {
+            font-size: 2rem;
+            text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.7);
+        }
+        p {
+            font-size: 1.2rem;
+        }
+        .start-button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background: #ffcc00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .start-button:hover {
+            background: #ffdb4d;
+            transform: scale(1.05);
+        }
+
+        /* Overlay awal */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 1.8rem;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-        .emoji {
-            font-size: 2rem;
-            margin-left: 10px;
+            cursor: pointer;
+            z-index: 10;
+            animation: fadeIn 1s ease-in-out;
         }
         @keyframes fadeIn {
             from { opacity: 0; }
@@ -39,17 +75,25 @@
         }
     </style>
 </head>
-<body onclick="startGame()">
-    <div class="container">
-        Klik untuk Memulai <span class="emoji">🎌</span>
+<body>
+    <!-- Overlay awal -->
+    <div class="overlay" onclick="startGame()">Klik untuk Memulai 🎌</div>
+
+    <!-- Halaman utama -->
+    <div class="container" id="main-content" style="display: none;">
+        <h1>テストの時間</h1>
+        <p>(Tes Ilmu Jepang)</p>
+        <button class="start-button" onclick="window.location.href='bab.html'">Mulai</button>
     </div>
-    <audio id="bg-music" src="background-music.mp3" loop></audio>
+
+    <!-- Musik latar -->
+    <audio id="bg-music" src="epep.mp3" loop></audio>
+
     <script>
         function startGame() {
             document.getElementById("bg-music").play();
-            setTimeout(() => {
-                window.location.href = "bab.html";
-            }, 500);
+            document.querySelector(".overlay").style.display = "none";
+            document.getElementById("main-content").style.display = "block";
         }
     </script>
 </body>
