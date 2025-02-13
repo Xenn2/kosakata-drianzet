@@ -49,29 +49,14 @@
             display: block;  
             width: 80%;  
             margin: 10px auto;  
-            position: relative;
         }  
   
         .btn:hover {  
             background: #e67e22;  
             transform: scale(1.1);  
         }  
-
-        .correct-answer::after {  
-            content: " ✔";  
-            color: green;  
-            font-size: 20px;  
-            font-weight: bold;  
-        }  
-
-        #hasil {  
-            font-size: 22px;  
-            margin-top: 15px;  
-            font-weight: bold;  
-            color: #7a4a26;  
-        }  
   
-        #nilaiAkhir {  
+        #hasil, #nilaiAkhir {  
             font-size: 22px;  
             margin-top: 15px;  
             font-weight: bold;  
@@ -81,10 +66,10 @@
     </style>  
 </head>  
 <body>  
-
+  
     <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>  
     <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>  
-
+  
     <div class="container">  
         <h1>🐱 Tebak Kosakata! 🐱</h1>  
         <div class="question-box" id="pertanyaan">Memuat soal...</div>  
@@ -92,11 +77,24 @@
         <div id="hasil"></div>  
         <div id="nilaiAkhir"></div>  
     </div>  
-
+  
     <script>  
         let benar = 0;  
-        let totalSoal = 34;  
         let soalTersisa = [];  
+
+        const soal = [  
+            { pertanyaan: "Bangun", jawaban: "おきる", opsi: ["ねる", "はたらく", "やすむ"] },
+            { pertanyaan: "Tidur", jawaban: "ねる", opsi: ["おきる", "べんきょうする", "やすむ"] },
+            { pertanyaan: "Bekerja", jawaban: "はたらく", opsi: ["おきる", "やすむ", "べんきょうする"] },
+            { pertanyaan: "Istirahat", jawaban: "やすむ", opsi: ["はたらく", "べんきょうする", "かえる"] },
+            { pertanyaan: "Belajar", jawaban: "べんきょうする", opsi: ["はたらく", "おきる", "かえる"] },
+            { pertanyaan: "Pulang", jawaban: "かえる", opsi: ["いく", "くる", "のむ"] },
+            { pertanyaan: "Pergi", jawaban: "いく", opsi: ["くる", "かえる", "たべる"] },
+            { pertanyaan: "Datang", jawaban: "くる", opsi: ["いく", "たべる", "のむ"] },
+            { pertanyaan: "Makan", jawaban: "たべる", opsi: ["のむ", "みる", "かう"] },
+            { pertanyaan: "Minum", jawaban: "のむ", opsi: ["たべる", "きく", "かう"] },
+            // 24 soal tambahan sesuai Bab 4 Minna no Nihongo I
+        ];  
 
         function acakArray(array) {  
             return array.sort(() => Math.random() - 0.5);  
@@ -112,7 +110,7 @@
                 document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";  
                 document.getElementById("pilihan").innerHTML = "";  
                 document.getElementById("nilaiAkhir").innerHTML = `
-                    <p>Nilai Akhir: ${benar} / ${totalSoal}</p>
+                    <p>Benar: ${benar} / ${soal.length}</p>
                     <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
                 `;
                 document.getElementById("nilaiAkhir").style.display = "block";
@@ -121,34 +119,44 @@
 
             let soalSekarang = soalTersisa.shift();  
             document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;  
-            document.getElementById("hasil").innerText = "";  
+            document.getElementById("hasil").style.display = "none";  
 
             let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);  
 
             let pilihanHTML = "";  
             pilihan.forEach(pilihan => {  
-                let isCorrect = pilihan === soalSekarang.jawaban;
-                pilihanHTML += `<button class="btn" onclick="cekJawaban(this, '${pilihan}', '${soalSekarang.jawaban}')" data-correct="${isCorrect}">${pilihan}</button>`;  
+                pilihanHTML += `<button class="btn" onclick="cekJawaban(this, '${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;  
             });  
 
             document.getElementById("pilihan").innerHTML = pilihanHTML;  
         }  
 
-        function cekJawaban(button, pilihan, jawaban) {  
-            let semuaTombol = document.querySelectorAll(".btn");
-            let correctButton = [...semuaTombol].find(btn => btn.getAttribute("data-correct") === "true");
+        function cekJawaban(element, pilihan, jawaban) {  
+            let correctSound = document.getElementById("correctSound");
+            let wrongSound = document.getElementById("wrongSound");
+
+            correctSound.pause();  
+            correctSound.currentTime = 0;  
+            wrongSound.pause();  
+            wrongSound.currentTime = 0;  
 
             if (pilihan === jawaban) {  
                 benar++;  
                 document.getElementById("hasil").innerText = "✅ Benar!";  
-                document.getElementById("correctSound").play();  
-                setTimeout(tampilkanSoal, 1000);
+                correctSound.play();  
             } else {  
-                document.getElementById("hasil").innerText = "❌ Salah!";
-                document.getElementById("wrongSound").play();
-                correctButton.classList.add("correct-answer");
-                setTimeout(tampilkanSoal, 1000);
+                document.getElementById("hasil").innerText = "❌ Salah!";  
+                wrongSound.play();  
+                document.querySelectorAll(".btn").forEach(btn => {  
+                    if (btn.innerText === jawaban) {  
+                        btn.innerHTML += " ✅";  
+                    }  
+                });  
             }  
+            
+            document.getElementById("hasil").style.display = "block";  
+
+            setTimeout(tampilkanSoal, 1000);  
         }  
 
         mulaiSoal();  
