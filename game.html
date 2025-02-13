@@ -1,88 +1,118 @@
-<!DOCTYPE html>  
-<html lang="id">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>Tebak Kosakata - Bab 4</title>  
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">  
-    <style>  
-        body {   
-            font-family: 'Bangers', cursive;  
-            text-align: center;  
-            background: url('https://i.postimg.cc/BZrhgp7y/b888b163e0277f3b0552077ef976e416.jpg') no-repeat center center fixed;  
-            background-size: cover;  
-        }  
-  
-        .container {  
-            background: rgba(245, 214, 163, 0.9);  
-            padding: 30px;  
-            border-radius: 20px;  
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);  
-            max-width: 500px;  
-            width: 90%;  
-            margin: auto;  
-            border: 6px solid #d69c50;  
-            margin-top: 50px;  
-        }  
-  
-        .question-box {  
-            background: #d69c50;  
-            color: white;  
-            padding: 18px;  
-            border-radius: 20px;  
-            font-size: 20px;  
-            font-weight: bold;  
-            margin-bottom: 20px;  
-        }  
-  
-        .btn {  
-            padding: 12px 20px;  
-            font-size: 16px;  
-            cursor: pointer;  
-            border-radius: 50px;  
-            margin: 5px;  
-            font-weight: bold;  
-            background: #ff9800;  
-            color: white;  
-            border: 3px solid #e67e22;  
-            transition: all 0.3s;  
-            display: block;  
-            width: 80%;  
-            margin: 10px auto;  
-        }  
-  
-        .btn:hover {  
-            background: #e67e22;  
-            transform: scale(1.1);  
-        }  
-  
-        #hasil, #nilaiAkhir {  
-            font-size: 22px;  
-            margin-top: 15px;  
-            font-weight: bold;  
-            color: #7a4a26;  
-            display: none;  
-        }  
-    </style>  
-</head>  
-<body>  
-  
-    <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>  
-    <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>  
-  
-    <div class="container">  
-        <h1>🐱 Tebak Kosakata! 🐱</h1>  
-        <div class="question-box" id="pertanyaan">Memuat soal...</div>  
-        <div id="pilihan"></div>  
-        <div id="hasil"></div>  
-        <div id="nilaiAkhir"></div>  
-    </div>  
-  
-    <script>  
-        let benar = 0;  
-        let soalTersisa = [];  
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tebak Kosakata - Bab 4</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
+    <style>
+        body {
+            font-family: 'Bangers', cursive;
+            text-align: center;
+            background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center/cover;
+            margin: 0;
+            padding: 0;
+        }
 
-        const soal = [  
+        .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .overlay-text {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .container {
+            background: rgba(245, 214, 163, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            margin: auto;
+            border: 6px solid #d69c50;
+            margin-top: 50px;
+        }
+
+        .question-box {
+            background: #d69c50;
+            color: white;
+            padding: 18px;
+            border-radius: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 50px;
+            margin: 5px;
+            font-weight: bold;
+            background: #ff9800;
+            color: white;
+            border: 3px solid #e67e22;
+            transition: all 0.3s;
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+        }
+
+        .btn:hover {
+            background: #e67e22;
+            transform: scale(1.1);
+        }
+
+        #hasil, #nilaiAkhir {
+            font-size: 22px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #7a4a26;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay" id="overlay">
+        <div class="overlay-text">Klik untuk Mulai</div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="epep.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>
+    <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>
+
+    <div class="container">
+        <h1>🐱 Tebak Kosakata! 🐱</h1>
+        <div class="question-box" id="pertanyaan">Memuat soal...</div>
+        <div id="pilihan"></div>
+        <div id="hasil"></div>
+        <div id="nilaiAkhir"></div>
+    </div>
+
+    <script>
+        let benar = 0;
+        let soalTersisa = [];
+
+        const soal = [
             { pertanyaan: "Bangun", jawaban: "おきる", opsi: ["ねる", "はたらく", "やすむ"] },
             { pertanyaan: "Tidur", jawaban: "ねる", opsi: ["おきる", "べんきょうする", "やすむ"] },
             { pertanyaan: "Bekerja", jawaban: "はたらく", opsi: ["おきる", "やすむ", "べんきょうする"] },
@@ -92,75 +122,89 @@
             { pertanyaan: "Pergi", jawaban: "いく", opsi: ["くる", "かえる", "たべる"] },
             { pertanyaan: "Datang", jawaban: "くる", opsi: ["いく", "たべる", "のむ"] },
             { pertanyaan: "Makan", jawaban: "たべる", opsi: ["のむ", "みる", "かう"] },
-            { pertanyaan: "Minum", jawaban: "のむ", opsi: ["たべる", "きく", "かう"] },
-            // 24 soal tambahan sesuai Bab 4 Minna no Nihongo I
-        ];  
+            { pertanyaan: "Minum", jawaban: "のむ", opsi: ["たべる", "きく", "かう"] }
+        ];
 
-        function acakArray(array) {  
-            return array.sort(() => Math.random() - 0.5);  
-        }  
+        function acakArray(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
 
-        function mulaiSoal() {  
-            soalTersisa = [...soal];  
-            tampilkanSoal();  
-        }  
+        function mulaiSoal() {
+            soalTersisa = [...soal];
+            tampilkanSoal();
+        }
 
-        function tampilkanSoal() {  
-            if (soalTersisa.length === 0) {  
-                document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";  
-                document.getElementById("pilihan").innerHTML = "";  
+        function tampilkanSoal() {
+            if (soalTersisa.length === 0) {
+                document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";
+                document.getElementById("pilihan").innerHTML = "";
                 document.getElementById("nilaiAkhir").innerHTML = `
                     <p>Benar: ${benar} / ${soal.length}</p>
                     <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
                 `;
                 document.getElementById("nilaiAkhir").style.display = "block";
-                return;  
-            }  
+                return;
+            }
 
-            let soalSekarang = soalTersisa.shift();  
-            document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;  
-            document.getElementById("hasil").style.display = "none";  
+            let soalSekarang = soalTersisa.shift();
+            document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;
+            document.getElementById("hasil").style.display = "none";
 
-            let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);  
+            let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);
 
-            let pilihanHTML = "";  
-            pilihan.forEach(pilihan => {  
-                pilihanHTML += `<button class="btn" onclick="cekJawaban(this, '${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;  
-            });  
+            let pilihanHTML = "";
+            pilihan.forEach(pilihan => {
+                pilihanHTML += `<button class="btn" onclick="cekJawaban(this, '${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;
+            });
 
-            document.getElementById("pilihan").innerHTML = pilihanHTML;  
-        }  
+            document.getElementById("pilihan").innerHTML = pilihanHTML;
+        }
 
-        function cekJawaban(element, pilihan, jawaban) {  
+        function cekJawaban(element, pilihan, jawaban) {
             let correctSound = document.getElementById("correctSound");
             let wrongSound = document.getElementById("wrongSound");
 
-            correctSound.pause();  
-            correctSound.currentTime = 0;  
-            wrongSound.pause();  
-            wrongSound.currentTime = 0;  
+            correctSound.pause();
+            correctSound.currentTime = 0;
+            wrongSound.pause();
+            wrongSound.currentTime = 0;
 
-            if (pilihan === jawaban) {  
-                benar++;  
-                document.getElementById("hasil").innerText = "✅ Benar!";  
-                correctSound.play();  
-            } else {  
-                document.getElementById("hasil").innerText = "❌ Salah!";  
-                wrongSound.play();  
-                document.querySelectorAll(".btn").forEach(btn => {  
-                    if (btn.innerText === jawaban) {  
-                        btn.innerHTML += " ✅";  
-                    }  
-                });  
-            }  
-            
-            document.getElementById("hasil").style.display = "block";  
+            if (pilihan === jawaban) {
+                benar++;
+                document.getElementById("hasil").innerText = "✅ Benar!";
+                correctSound.play();
+            } else {
+                document.getElementById("hasil").innerText = "❌ Salah!";
+                wrongSound.play();
+                document.querySelectorAll(".btn").forEach(btn => {
+                    if (btn.innerText === jawaban) {
+                        btn.innerHTML += " ✅";
+                    }
+                });
+            }
 
-            setTimeout(tampilkanSoal, 1000);  
-        }  
+            document.getElementById("hasil").style.display = "block";
+            setTimeout(tampilkanSoal, 1000);
+        }
 
-        mulaiSoal();  
-    </script>  
+        document.addEventListener("DOMContentLoaded", function () {
+            let bgMusic = document.getElementById("bg-music");
+            let overlay = document.getElementById("overlay");
 
-</body>  
-</html>
+            if (sessionStorage.getItem("musicPlaying")) {
+                bgMusic.play();
+                overlay.style.display = "none";
+            } else {
+                overlay.addEventListener("click", function () {
+                    bgMusic.play();
+                    sessionStorage.setItem("musicPlaying", "true");
+                    overlay.style.display = "none";
+                });
+            }
+        });
+
+        mulaiSoal();
+    </script>
+
+</body>
+    </html>
