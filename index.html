@@ -48,23 +48,49 @@
             margin-bottom: 20px;
         }
 
-        .start-btn {
-            background: linear-gradient(90deg, #d97706, #b91c1c);
-            padding: 12px 24px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #fff;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+        /* Tombol Mulai (Layer Awal) */
+.start-btn {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
 
-        .start-btn:hover {
-            background: linear-gradient(90deg, #b45309, #7f1d1d);
-            transform: scale(1.05);
-        }
+.start-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+}
 
+/* Tombol Mulai (Halaman Utama) */
+.btn {
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    transform: scale(1.1);
+            }
         /* Kotak utama */
         .container {
             background: rgba(0, 0, 0, 0.5);
@@ -93,22 +119,7 @@
         }
 
         /* Tombol */
-        .btn {
-            background: linear-gradient(90deg, #d97706, #b91c1c);
-            padding: 12px 24px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #fff;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background: linear-gradient(90deg, #b45309, #7f1d1d);
-            transform: scale(1.05);
-        }
+        
     </style>
 </head>
 <body>
