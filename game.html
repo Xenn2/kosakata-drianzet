@@ -1,4 +1,4 @@
- <!DOCTYPE html>  
+<!DOCTYPE html>  
 <html lang="id">  
 <head>  
     <meta charset="UTF-8">  
@@ -49,13 +49,21 @@
             display: block;  
             width: 80%;  
             margin: 10px auto;  
+            position: relative;
         }  
   
         .btn:hover {  
             background: #e67e22;  
             transform: scale(1.1);  
         }  
-  
+
+        .correct-answer::after {  
+            content: " ✔";  
+            color: green;  
+            font-size: 20px;  
+            font-weight: bold;  
+        }  
+
         #hasil {  
             font-size: 22px;  
             margin-top: 15px;  
@@ -73,10 +81,10 @@
     </style>  
 </head>  
 <body>  
-  
+
     <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>  
     <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>  
-  
+
     <div class="container">  
         <h1>🐱 Tebak Kosakata! 🐱</h1>  
         <div class="question-box" id="pertanyaan">Memuat soal...</div>  
@@ -84,47 +92,11 @@
         <div id="hasil"></div>  
         <div id="nilaiAkhir"></div>  
     </div>  
-  
+
     <script>  
         let benar = 0;  
         let totalSoal = 34;  
         let soalTersisa = [];  
-
-        const soal = [
-    { pertanyaan: "Bangun", jawaban: "おきる", opsi: ["ねる", "はたらく", "やすむ"] },
-    { pertanyaan: "Tidur", jawaban: "ねる", opsi: ["おきる", "べんきょうする", "やすむ"] },
-    { pertanyaan: "Bekerja", jawaban: "はたらく", opsi: ["おきる", "やすむ", "べんきょうする"] },
-    { pertanyaan: "Istirahat", jawaban: "やすむ", opsi: ["はたらく", "べんきょうする", "かえる"] },
-    { pertanyaan: "Belajar", jawaban: "べんきょうする", opsi: ["はたらく", "おきる", "かえる"] },
-    { pertanyaan: "Selesai", jawaban: "おわる", opsi: ["かえる", "べんきょうする", "やすむ"] },
-    { pertanyaan: "Toserba", jawaban: "デパート", opsi: ["がっこう", "ゆうびんきょく", "ぎんこう"] },
-    { pertanyaan: "Bank", jawaban: "ぎんこう", opsi: ["デパート", "としょかん", "びょういん"] },
-    { pertanyaan: "Kantor pos", jawaban: "ゆうびんきょく", opsi: ["デパート", "びょういん", "えき"] },
-    { pertanyaan: "Perpustakaan", jawaban: "としょかん", opsi: ["びょういん", "デパート", "えき"] },
-    { pertanyaan: "Sekolah", jawaban: "がっこう", opsi: ["びょういん", "としょかん", "ゆうびんきょく"] },
-    { pertanyaan: "Rumah sakit", jawaban: "びょういん", opsi: ["ぎんこう", "えき", "ゆうびんきょく"] },
-    { pertanyaan: "Sekarang", jawaban: "いま", opsi: ["あさ", "ひる", "よる"] },
-    { pertanyaan: "Pagi", jawaban: "あさ", opsi: ["ひる", "いま", "よる"] },
-    { pertanyaan: "Siang", jawaban: "ひる", opsi: ["あさ", "いま", "よる"] },
-    { pertanyaan: "Malam", jawaban: "よる", opsi: ["あさ", "ひる", "いま"] },
-    { pertanyaan: "Hari ini", jawaban: "きょう", opsi: ["あした", "きのう", "あさって"] },
-    { pertanyaan: "Besok", jawaban: "あした", opsi: ["きょう", "きのう", "あさって"] },
-    { pertanyaan: "Kemarin", jawaban: "きのう", opsi: ["あした", "あさって", "きょう"] },
-    { pertanyaan: "Lusa", jawaban: "あさって", opsi: ["きのう", "きょう", "あした"] },
-    { pertanyaan: "Kemarin lusa", jawaban: "おととい", opsi: ["あさって", "きのう", "きょう"] },
-    { pertanyaan: "Pagi ini", jawaban: "けさ", opsi: ["あした", "きのう", "いま"] },
-    { pertanyaan: "Malam ini", jawaban: "こんばん", opsi: ["あさって", "きのう", "けさ"] },
-    { pertanyaan: "Istirahat siang", jawaban: "ひるやすみ", opsi: ["けさ", "きのう", "いま"] },
-    { pertanyaan: "Ujian", jawaban: "しけん", opsi: ["しゅくだい", "べんきょうする", "クラス"] },
-    { pertanyaan: "PR", jawaban: "しゅくだい", opsi: ["しけん", "べんきょうする", "クラス"] },
-    { pertanyaan: "Pesta", jawaban: "パーティー", opsi: ["かいぎ", "しゅくだい", "しけん"] },
-    { pertanyaan: "Rapat", jawaban: "かいぎ", opsi: ["パーティー", "しゅくだい", "しけん"] },
-    { pertanyaan: "Bioskop", jawaban: "えいがかん", opsi: ["がっこう", "びょういん", "としょかん"] },
-    { pertanyaan: "Hari libur", jawaban: "やすみ", opsi: ["しごと", "べんきょうする", "ひるやすみ"] },
-    { pertanyaan: "Pekerjaan", jawaban: "しごと", opsi: ["やすみ", "がっこう", "ひるやすみ"] },
-    { pertanyaan: "Nomor", jawaban: "ばんごう", opsi: ["しけん", "かいぎ", "パーティー"] },
-    { pertanyaan: "Apa nomor teleponmu?", jawaban: "でんわばんごうは", opsi: ["しごと?", "がっこう?", "クラス?"] }
-];
 
         function acakArray(array) {  
             return array.sort(() => Math.random() - 0.5);  
@@ -140,10 +112,10 @@
                 document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";  
                 document.getElementById("pilihan").innerHTML = "";  
                 document.getElementById("nilaiAkhir").innerHTML = `
-    <p>Nilai Akhir: ${benar} / ${totalSoal}</p>
-    <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
-`;
-document.getElementById("nilaiAkhir").style.display = "block";
+                    <p>Nilai Akhir: ${benar} / ${totalSoal}</p>
+                    <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
+                `;
+                document.getElementById("nilaiAkhir").style.display = "block";
                 return;  
             }  
 
@@ -155,22 +127,28 @@ document.getElementById("nilaiAkhir").style.display = "block";
 
             let pilihanHTML = "";  
             pilihan.forEach(pilihan => {  
-                pilihanHTML += `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;  
+                let isCorrect = pilihan === soalSekarang.jawaban;
+                pilihanHTML += `<button class="btn" onclick="cekJawaban(this, '${pilihan}', '${soalSekarang.jawaban}')" data-correct="${isCorrect}">${pilihan}</button>`;  
             });  
 
             document.getElementById("pilihan").innerHTML = pilihanHTML;  
         }  
 
-        function cekJawaban(pilihan, jawaban) {  
+        function cekJawaban(button, pilihan, jawaban) {  
+            let semuaTombol = document.querySelectorAll(".btn");
+            let correctButton = [...semuaTombol].find(btn => btn.getAttribute("data-correct") === "true");
+
             if (pilihan === jawaban) {  
                 benar++;  
                 document.getElementById("hasil").innerText = "✅ Benar!";  
                 document.getElementById("correctSound").play();  
+                setTimeout(tampilkanSoal, 1000);
             } else {  
-                document.getElementById("hasil").innerText = "❌ Salah!";  
-                document.getElementById("wrongSound").play();  
+                document.getElementById("hasil").innerText = "❌ Salah!";
+                document.getElementById("wrongSound").play();
+                correctButton.classList.add("correct-answer");
+                setTimeout(tampilkanSoal, 1000);
             }  
-            setTimeout(tampilkanSoal, 1000);  
         }  
 
         mulaiSoal();  
