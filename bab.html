@@ -121,16 +121,14 @@
         <p class="subtitle">Pilih Bab untuk Belajar</p>
 
         <div class="bab-container">
-            <a href="bab1.html" class="bab-btn" onclick="playSFX()">BAB 1</a>
-            <a href="bab2.html" class="bab-btn" onclick="playSFX()">BAB 2</a>
-            <a href="bab3.html" class="bab-btn" onclick="playSFX()">BAB 3</a>
-            <a href="game.html" class="bab-btn" onclick="playSFX()">BAB 4</a>
+            <a href="bab1.html" class="bab-btn">BAB 1</a>
+            <a href="bab2.html" class="bab-btn">BAB 2</a>
+            <a href="bab3.html" class="bab-btn">BAB 3</a>
+            <a href="game.html" class="bab-btn">BAB 4</a>
         </div>
     </div>
 
-    <audio id="sfx-click">
-        <source src="ganbatte.mp3" type="audio/mpeg">
-    </audio>
+    
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -151,11 +149,7 @@
             });
         });
 
-        function playSFX() {
-            let sfx = document.getElementById("sfx-click");
-            sfx.currentTime = 0; // Reset suara agar bisa diputar ulang
-            sfx.play();
-        }
+        
     </script>
 
 </body>
