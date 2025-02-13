@@ -39,27 +39,50 @@
 
         /* Container tombol bab */
         .bab-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
-        /* Tombol bab */
-        .bab-btn {
-            text-decoration: none;
-            font-size: 1.2rem;
-            padding: 12px 25px;
-            border-radius: 8px;
-            transition: 0.3s;
-            background: linear-gradient(135deg, #4e54c8, #8f94fb);
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(142, 150, 255, 0.5);
-        }
+.bab-btn {
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+    border-radius: 12px;
+    font-weight: bold;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(220, 120, 70, 0.9), rgba(170, 50, 20, 0.9));
+    color: white;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 15px rgba(255, 100, 70, 0.8);
+    border: 2px solid rgba(255, 180, 150, 0.5);
+}
 
-        .bab-btn:hover {
-            background: linear-gradient(135deg, #8f94fb, #4e54c8);
-            box-shadow: 0 0 15px rgba(142, 150, 255, 0.7);
+.bab-btn::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
+    top: -50%;
+    left: -50%;
+    transform: rotate(25deg);
+    transition: 0.5s;
+}
+
+.bab-btn:hover::before {
+    top: -20%;
+    left: -20%;
+}
+
+.bab-btn:hover {
+    background: linear-gradient(135deg, rgba(255, 150, 100, 1), rgba(200, 80, 50, 1));
+    box-shadow: 0 0 20px rgba(255, 120, 70, 1);
         }
     </style>
 </head>
