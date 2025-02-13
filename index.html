@@ -4,133 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tes Ilmu Jepang</title>
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
     <style>
+        /* Reset dasar */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
 
-        /* Background dengan tema Jepang */
+        /* Background dengan nuansa Jepang */
         body {
-            font-family: 'Noto Sans JP', sans-serif;  
-            text-align: center;  
-            background: url('image/sakura_bg.jpg') no-repeat center center fixed;  
-            background-size: cover;
-        }
-
-        /* Overlay untuk klik awal */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: url('background-japan.jpg') no-repeat center center/cover;
             display: flex;
-            justify-content: center;
             align-items: center;
-            color: white;
-            font-size: 26px;
-            font-family: 'Zen Tokyo Zoo', cursive;
-            cursor: pointer;
-            z-index: 1000;
+            justify-content: center;
+            height: 100vh;
         }
 
-        /* Container utama */
+        /* Kontainer utama */
         .container {
+            text-align: center;
             background: rgba(0, 0, 0, 0.6);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-            display: none; /* Disembunyikan awalnya */
-            transition: 0.5s ease-in-out;
+            color: white;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
         }
 
         /* Judul */
-        h1 {
-            color: #fff;
-            font-size: 32px;
-            text-shadow: 3px 3px 8px rgba(255, 255, 255, 0.6);
-            margin-bottom: 20px;
-        }
-
-        /* Tombol */
-        .play-button {
-            display: inline-block;
-            background: #ffcc00;
-            color: #333;
-            text-decoration: none;
-            padding: 12px 25px;
-            font-size: 20px;
+        .title {
+            font-size: 2.5rem;
             font-weight: bold;
-            border-radius: 10px;
-            transition: 0.3s ease-in-out;
-            cursor: pointer;
+            text-shadow: 3px 3px 5px rgba(255, 255, 255, 0.7);
+        }
+
+        /* Subjudul dalam bahasa Indonesia */
+        .title span {
+            font-size: 1.2rem;
+            font-weight: normal;
+        }
+
+        /* Tombol Mulai */
+        .start-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: black;
+            background: #ffcc00;
             border: none;
-            box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
         }
 
-        .play-button:hover {
+        .start-button:hover {
             background: #ffdb4d;
-            box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
-        }
-
-        /* Animasi transisi */
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-
-    <!-- Overlay awal -->
-    <div class="overlay" id="overlay">
-        Klik untuk memulai 🎌
+    <div class="container">
+        <h1 class="title">テストの時間 <br> <span>(Tes Ilmu Jepang)</span></h1>
+        <button class="start-button" onclick="startGame()">Mulai</button>
     </div>
-
-    <!-- Container utama -->
-    <div class="container fade-in" id="main-content">
-        <h1>テストの時間 (Tes Ilmu Jepang)</h1>
-        <button class="play-button" id="start-button">Mulai</button>
-    </div>
-
-    <audio id="bg-music" loop>
-        <source src="epep.mp3" type="audio/mpeg">
-    </audio>
-
     <script>
-        document.getElementById("overlay").addEventListener("click", function() {
-            let audio = document.getElementById("bg-music");
-            let playPromise = audio.play();
-
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    console.log("Musik mulai diputar!");
-                }).catch(() => {
-                    console.log("Autoplay diblokir, menunggu interaksi pengguna...");
-                });
-            }
-
-            // Hilangkan overlay
-            this.style.display = "none";
-
-            // Tampilkan konten utama
-            document.getElementById("main-content").style.display = "block";
-        });
-
-        // Event untuk tombol mulai permainan
-        document.getElementById("start-button").addEventListener("click", function() {
-            window.location.href = "bab.html"; // Ganti dengan halaman berikutnya
-        });
+        function startGame() {
+            window.location.href = "game.html";
+        }
     </script>
-
 </body>
 </html>
