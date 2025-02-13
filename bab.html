@@ -19,26 +19,7 @@
         }
 
         /* Overlay untuk Musik */
-        .overlay {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 999;
-        }
-
-        .overlay-text {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-        }
+        
 
         /* Container */
         .container {
@@ -108,14 +89,7 @@
 </head>
 <body>
 
-    <div class="overlay">
-        <div class="overlay-text">Klik untuk Mulai</div>
-    </div>
-
-    <audio id="bg-music" loop>
-        <source src="epep.mp3" type="audio/mpeg">
-    </audio>
-
+    
     <!-- Audio untuk SFX saat klik tombol bab -->
     <audio id="sfx-click">
         <source src="ganbatte.mp3" type="audio/mpeg">
@@ -134,10 +108,7 @@
     </div>
 
     <script>
-        document.querySelector(".overlay").addEventListener("click", function() {
-            this.style.display = "none";
-            document.getElementById("bg-music").play();
-        });
+        
 
         function playSFX() {
             let sfx = document.getElementById("sfx-click");
