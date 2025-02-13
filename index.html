@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tes Ilmu</title>
+    <title>Tes Ilmu Jepang</title>
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Tokyo+Zoo&family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
 
-        /* Background dengan efek gradient */
+        /* Background dengan tema Jepang */
         body {
+            font-family: 'Noto Sans JP', sans-serif;  
             text-align: center;  
-            background: linear-gradient(135deg, #1E3A8A, #2563EB);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            background: url('image/sakura_bg.jpg') no-repeat center center fixed;  
+            background-size: cover;
         }
 
-        /* Overlay klik awal */
+        /* Overlay untuk klik awal */
         .overlay {
             position: fixed;
             top: 0;
@@ -35,31 +32,28 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 26px;
+            font-family: 'Zen Tokyo Zoo', cursive;
             cursor: pointer;
-            transition: opacity 0.5s ease-in-out;
             z-index: 1000;
         }
 
-        /* Box utama dengan efek blur */
+        /* Container utama */
         .container {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            display: none; /* Disembunyikan awalnya */
+            transition: 0.5s ease-in-out;
         }
 
         /* Judul */
         h1 {
-            color: white;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 15px;
+            color: #fff;
+            font-size: 32px;
+            text-shadow: 3px 3px 8px rgba(255, 255, 255, 0.6);
+            margin-bottom: 20px;
         }
 
         /* Tombol */
@@ -69,24 +63,29 @@
             color: #333;
             text-decoration: none;
             padding: 12px 25px;
-            font-size: 18px;
-            font-weight: 600;
-            border-radius: 8px;
-            transition: all 0.3s ease-in-out;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: 0.3s ease-in-out;
             cursor: pointer;
             border: none;
-            outline: none;
-            box-shadow: 0 4px 10px rgba(255, 204, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
         }
 
         .play-button:hover {
-            background: #ffd633;
-            box-shadow: 0 6px 15px rgba(255, 204, 0, 0.6);
-            transform: scale(1.05);
+            background: #ffdb4d;
+            box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
         }
 
-        .play-button:active {
-            transform: scale(0.95);
+        /* Animasi transisi */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -94,12 +93,12 @@
 
     <!-- Overlay awal -->
     <div class="overlay" id="overlay">
-        Klik untuk memulai
+        Klik untuk memulai 🎌
     </div>
 
     <!-- Container utama -->
-    <div class="container" id="main-content">
-        <h1>Tes Ilmu Anda</h1>
+    <div class="container fade-in" id="main-content">
+        <h1>テストの時間 (Tes Ilmu Jepang)</h1>
         <button class="play-button" id="start-button">Mulai</button>
     </div>
 
@@ -121,20 +120,15 @@
             }
 
             // Hilangkan overlay
-            this.style.opacity = "0";
-            setTimeout(() => {
-                this.style.display = "none";
-            }, 500);
+            this.style.display = "none";
 
-            // Tampilkan konten utama dengan efek animasi
-            let mainContent = document.getElementById("main-content");
-            mainContent.style.opacity = "1";
-            mainContent.style.transform = "translateY(0)";
+            // Tampilkan konten utama
+            document.getElementById("main-content").style.display = "block";
         });
 
         // Event untuk tombol mulai permainan
         document.getElementById("start-button").addEventListener("click", function() {
-            window.location.href = "bab.html";
+            window.location.href = "bab.html"; // Ganti dengan halaman berikutnya
         });
     </script>
 
