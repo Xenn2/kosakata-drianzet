@@ -107,15 +107,26 @@
         </div>
     </div>
 
-    <script>
-        
+    
 
-        function playSFX() {
-            let sfx = document.getElementById("sfx-click");
-            sfx.currentTime = 0; // Reset suara agar bisa diputar ulang
-            sfx.play();
-        }
-    </script>
+<script>
+    function playSFX(event) {
+        event.preventDefault(); // Mencegah perpindahan halaman langsung
+        let sfx = document.getElementById("sfx-click");
+        sfx.currentTime = 0;
+        sfx.play();
+
+        // Tunggu hingga suara selesai sebelum pindah halaman
+        sfx.onended = function () {
+            window.location.href = event.target.href;
+        };
+    }
+
+    // Tambahkan event listener ke semua tombol
+    document.querySelectorAll(".bab-btn").forEach(button => {
+        button.addEventListener("click", playSFX);
+    });
+</script>
 
 </body>
 </html>
