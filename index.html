@@ -5,47 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tes Ilmu Jepang</title>
     <style>
-        /* Reset dasar */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Arial', sans-serif;
         }
-
-        /* Background dengan nuansa Jepang */
         body {
             background: url('background-japan.jpg') no-repeat center center/cover;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
-        }
-
-        /* Kontainer utama */
-        .container {
             text-align: center;
-            background: rgba(0, 0, 0, 0.6);
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 15px;
             color: white;
-            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
         }
-
-        /* Judul */
-        .title {
+        h1 {
             font-size: 2.5rem;
-            font-weight: bold;
             text-shadow: 3px 3px 5px rgba(255, 255, 255, 0.7);
         }
-
-        /* Subjudul dalam bahasa Indonesia */
-        .title span {
+        .subtitle {
             font-size: 1.2rem;
             font-weight: normal;
         }
-
-        /* Tombol Mulai */
         .start-button {
             margin-top: 20px;
             padding: 15px 30px;
@@ -59,7 +47,6 @@
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
             transition: 0.3s;
         }
-
         .start-button:hover {
             background: #ffdb4d;
             transform: scale(1.1);
@@ -68,12 +55,17 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="title">テストの時間 <br> <span>(Tes Ilmu Jepang)</span></h1>
+        <h1>テストの時間</h1>
+        <p class="subtitle">(Tes Ilmu Jepang)</p>
         <button class="start-button" onclick="startGame()">Mulai</button>
     </div>
+    <audio id="bg-music" src="background-music.mp3" loop></audio>
     <script>
         function startGame() {
-            window.location.href = "game.html";
+            document.getElementById("bg-music").play();
+            setTimeout(() => {
+                window.location.href = "bab.html";
+            }, 500);
         }
     </script>
 </body>
