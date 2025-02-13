@@ -58,6 +58,52 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             margin-bottom: 10px;
         }
+
+        /* Subjudul */
+        .subtitle {
+            font-size: 1.2rem;
+            color: gold;
+            margin-bottom: 20px;
+        }
+
+        /* Susunan Bab */
+        .bab-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 10px;
+        }
+
+        /* Tombol Bab */
+        .bab-btn {
+            text-decoration: none;
+            font-size: 1.3rem;
+            padding: 15px 40px;
+            width: 140px;
+            text-align: center;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(220, 120, 70, 0.9), rgba(170, 50, 20, 0.9));
+            color: white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(255, 100, 70, 0.8);
+            border: 2px solid rgba(255, 180, 150, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Efek Hover */
+        .bab-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 150, 100, 1), rgba(200, 80, 50, 1));
+            box-shadow: 0 0 20px rgba(255, 120, 70, 1);
+        }
     </style>
 </head>
 <body>
@@ -71,9 +117,20 @@
     </audio>
 
     <div class="container">
-        <h1 class="title">Bab Ini</h1>
-        <p style="color: white;">Selamat belajar di halaman Bab ini!</p>
+        <h1 class="title">学習の章</h1>
+        <p class="subtitle">Pilih Bab untuk Belajar</p>
+
+        <div class="bab-container">
+            <a href="bab1.html" class="bab-btn" onclick="playSFX()">BAB 1</a>
+            <a href="bab2.html" class="bab-btn" onclick="playSFX()">BAB 2</a>
+            <a href="bab3.html" class="bab-btn" onclick="playSFX()">BAB 3</a>
+            <a href="game.html" class="bab-btn" onclick="playSFX()">BAB 4</a>
+        </div>
     </div>
+
+    <audio id="sfx-click">
+        <source src="ganbatte.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -93,6 +150,12 @@
                 overlay.style.display = "none";
             });
         });
+
+        function playSFX() {
+            let sfx = document.getElementById("sfx-click");
+            sfx.currentTime = 0; // Reset suara agar bisa diputar ulang
+            sfx.play();
+        }
     </script>
 
 </body>
