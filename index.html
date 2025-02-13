@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tes ilmu</title>
+    <title>Tes Ilmu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        /* Background */
+        /* Background dengan efek gradasi */
         body {
-            font-family: 'Bangers', cursive;  
             text-align: center;  
-            background: url('image/b888b163e0277f3b0552077ef976e416.jpg') no-repeat center center fixed;  
-            background-size: cover;  
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
 
-        /* Overlay hitam untuk klik awal */
+        /* Overlay awal */
         .overlay {
             position: fixed;
             top: 0;
@@ -31,43 +36,58 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 24px;
+            font-size: 26px;
             cursor: pointer;
             z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
         }
 
         /* Container utama */
         .container {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.1);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
             display: none; /* Disembunyikan awalnya */
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-in-out;
         }
 
-        /* Judul */
+        /* Efek fade in */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Judul dengan efek glow */
         h1 {
             color: #ffffff;
-            font-size: 28px;
+            font-size: 32px;
+            font-weight: 700;
             margin-bottom: 20px;
+            text-shadow: 0px 0px 15px rgba(255, 255, 255, 0.8);
         }
 
         /* Tombol */
         .play-button {
             display: inline-block;
             background: #ffcc00;
-            color: #333;
+            color: #222;
             text-decoration: none;
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 12px 25px;
+            font-size: 20px;
             border-radius: 8px;
-            transition: 0.3s;
+            font-weight: 700;
+            transition: 0.3s ease-in-out;
             cursor: pointer;
             border: none;
+            box-shadow: 0px 4px 10px rgba(255, 204, 0, 0.5);
         }
 
         .play-button:hover {
-            background: #ffdb4d;
+            background: #ffd633;
+            transform: scale(1.1);
+            box-shadow: 0px 6px 15px rgba(255, 204, 0, 0.8);
         }
     </style>
 </head>
@@ -80,8 +100,8 @@
 
     <!-- Container utama -->
     <div class="container" id="main-content">
-        <h1>Tes ilmu masbro</h1>
-        <button class="play-button" id="start-button">Masok</button>
+        <h1>Tes Ilmu Anda</h1>
+        <button class="play-button" id="start-button">Mulai</button>
     </div>
 
     <audio id="bg-music" loop>
@@ -101,8 +121,11 @@
                 });
             }
 
-            // Hilangkan overlay
-            this.style.display = "none";
+            // Hilangkan overlay dengan efek fade out
+            this.style.opacity = "0";
+            setTimeout(() => {
+                this.style.display = "none";
+            }, 500);
 
             // Tampilkan konten utama
             document.getElementById("main-content").style.display = "block";
