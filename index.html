@@ -23,6 +23,46 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Layer awal */
+        .start-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .start-layer h1 {
+            color: #fff;
+            font-size: 2rem;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .start-btn {
+            background: linear-gradient(90deg, #d97706, #b91c1c);
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .start-btn:hover {
+            background: linear-gradient(90deg, #b45309, #7f1d1d);
+            transform: scale(1.05);
         }
 
         /* Kotak utama */
@@ -35,6 +75,7 @@
             text-align: center;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(5px);
+            display: none;
         }
 
         /* Judul */
@@ -71,15 +112,29 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Layer Awal -->
+    <div class="start-layer" id="startLayer">
+        <h1>Klik untuk memulai</h1>
+        <button class="start-btn" onclick="startGame()">Mulai</button>
+    </div>
+
+    <!-- Background Musik -->
+    <audio id="bgMusic" loop>
+        <source src="epep.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- Kotak utama -->
+    <div class="container" id="mainContent">
         <h1>テストの時間</h1>
         <p class="subtitle">(Tes Ilmu Jepang)</p>
-        <button class="btn" onclick="mulai()">Mulai</button>
+        <button class="btn" onclick="window.location.href='bab.html'">Mulai</button>
     </div>
 
     <script>
-        function mulai() {
-            window.location.href = "cover.html";
+        function startGame() {
+            document.getElementById('bgMusic').play();
+            document.getElementById('startLayer').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
         }
     </script>
 </body>
