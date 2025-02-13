@@ -1,9 +1,138 @@
-<h1>学習の章</h1>
-<p>Pilih Bab untuk Belajar</p>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bab Pembelajaran</title>
+    <style>
+        /* Background Full */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
 
-<div class="bab-container">
-    <button onclick="loadPage('bab1.html')">BAB 1</button>
-    <button onclick="loadPage('bab2.html')">BAB 2</button>
-    <button onclick="loadPage('bab3.html')">BAB 3</button>
-    <button onclick="loadPage('game.html')">BAB 4</button> <!-- Sesuai permintaan -->
-</div>
+        /* Overlay untuk Musik */
+        .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .overlay-text {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Judul */
+        .title {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
+        }
+
+        /* Subjudul */
+        .subtitle {
+            font-size: 1.2rem;
+            color: gold;
+            margin-bottom: 20px;
+        }
+
+        /* Susunan Bab */
+        .bab-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 10px;
+        }
+
+        /* Tombol Bab */
+        .bab-btn {
+            text-decoration: none;
+            font-size: 1.3rem;
+            padding: 15px 40px;
+            width: 140px;
+            text-align: center;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(220, 120, 70, 0.9), rgba(170, 50, 20, 0.9));
+            color: white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(255, 100, 70, 0.8);
+            border: 2px solid rgba(255, 180, 150, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Efek Hover */
+        .bab-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 150, 100, 1), rgba(200, 80, 50, 1));
+            box-shadow: 0 0 20px rgba(255, 120, 70, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="overlay">
+        <div class="overlay-text">Klik untuk Mulai</div>
+    </div>
+
+    <audio id="bg-music" loop>
+        <source src="background-music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="container">
+        <h1 class="title">学習の章</h1>
+        <p class="subtitle">Pilih Bab untuk Belajar</p>
+
+        <div class="bab-container">
+            <a href="bab1.html" class="bab-btn">BAB 1</a>
+            <a href="bab2.html" class="bab-btn">BAB 2</a>
+            <a href="bab3.html" class="bab-btn">BAB 3</a>
+            <a href="game.html" class="bab-btn">BAB 4</a>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".overlay").addEventListener("click", function() {
+            this.style.display = "none";
+            document.getElementById("bg-music").play();
+        });
+    </script>
+
+</body>
+</html>
