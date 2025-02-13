@@ -19,7 +19,26 @@
         }
 
         /* Overlay untuk Musik */
-        
+        .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .overlay-text {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
 
         /* Container */
         .container {
@@ -39,74 +58,42 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             margin-bottom: 10px;
         }
-
-        /* Subjudul */
-        .subtitle {
-            font-size: 1.2rem;
-            color: gold;
-            margin-bottom: 20px;
-        }
-
-        /* Susunan Bab */
-        .bab-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            padding: 10px;
-        }
-
-        /* Tombol Bab */
-        .bab-btn {
-            text-decoration: none;
-            font-size: 1.3rem;
-            padding: 15px 40px;
-            width: 140px;
-            text-align: center;
-            border-radius: 12px;
-            font-weight: bold;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(135deg, rgba(220, 120, 70, 0.9), rgba(170, 50, 20, 0.9));
-            color: white;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 15px rgba(255, 100, 70, 0.8);
-            border: 2px solid rgba(255, 180, 150, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        /* Efek Hover */
-        .bab-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 150, 100, 1), rgba(200, 80, 50, 1));
-            box-shadow: 0 0 20px rgba(255, 120, 70, 1);
-        }
     </style>
 </head>
 <body>
 
-    
-
-
-    <div class="container">
-        <h1 class="title">学習の章</h1>
-        <p class="subtitle">Pilih Bab untuk Belajar</p>
-
-        <div class="bab-container">
-            <a href="bab1.html" class="bab-btn" onclick="playSFX()">BAB 1</a>
-            <a href="bab2.html" class="bab-btn" onclick="playSFX()">BAB 2</a>
-            <a href="bab3.html" class="bab-btn" onclick="playSFX()">BAB 3</a>
-            <a href="game.html" class="bab-btn" onclick="playSFX()">BAB 4</a>
-        </div>
+    <div class="overlay" id="overlay">
+        <div class="overlay-text">Klik untuk Mulai</div>
     </div>
 
-    
+    <audio id="bg-music" loop>
+        <source src="epep.mp3" type="audio/mpeg">
+    </audio>
 
+    <div class="container">
+        <h1 class="title">Bab Ini</h1>
+        <p style="color: white;">Selamat belajar di halaman Bab ini!</p>
+    </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let bgMusic = document.getElementById("bg-music");
+            let overlay = document.getElementById("overlay");
+
+            // Cek apakah musik sudah pernah diputar
+            if (sessionStorage.getItem("musicPlayed")) {
+                bgMusic.play();
+                overlay.style.display = "none"; // Langsung hilangkan overlay jika musik sudah pernah diputar
+            }
+
+            // Klik overlay untuk memulai musik jika belum diputar
+            overlay.addEventListener("click", function () {
+                bgMusic.play();
+                sessionStorage.setItem("musicPlayed", "true");
+                overlay.style.display = "none";
+            });
+        });
+    </script>
 
 </body>
 </html>
