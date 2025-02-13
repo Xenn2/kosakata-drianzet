@@ -3,94 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pilih Bab</title>
+    <title>Bab Pembelajaran</title>
     <style>
-        /* Background sesuai tema */
+        /* Background Full */
         body {
-            background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: white;
-            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
             text-align: center;
         }
 
-        /* Container utama */
-        .container {
-            margin-top: 10%;
+        /* Overlay untuk Musik */
+        .overlay {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 999;
+        }
+
+        .overlay-text {
             background: rgba(0, 0, 0, 0.7);
             padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            width: 90%;
+            max-width: 500px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 30px;
             border-radius: 15px;
-            display: inline-block;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
-        /* Judul dengan efek glow */
-        .judul {
-            font-size: 2.5rem;
+        /* Judul */
+        .title {
+            font-size: 2rem;
+            color: white;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            margin-bottom: 10px;
         }
 
-        /* Sub-judul */
-        .sub-judul {
+        /* Subjudul */
+        .subtitle {
             font-size: 1.2rem;
-            color: #f8d568;
+            color: gold;
             margin-bottom: 20px;
         }
 
-        /* Container tombol bab */
+        /* Susunan Bab */
         .bab-container {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 10px;
+        }
 
-.bab-btn {
-    text-decoration: none;
-    font-size: 1.2rem;
-    padding: 15px 30px;
-    border-radius: 12px;
-    font-weight: bold;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(220, 120, 70, 0.9), rgba(170, 50, 20, 0.9));
-    color: white;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 15px rgba(255, 100, 70, 0.8);
-    border: 2px solid rgba(255, 180, 150, 0.5);
-}
+        /* Tombol Bab */
+        .bab-btn {
+            text-decoration: none;
+            font-size: 1.3rem;
+            padding: 15px 40px;
+            width: 140px;
+            text-align: center;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(220, 120, 70, 0.9), rgba(170, 50, 20, 0.9));
+            color: white;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(255, 100, 70, 0.8);
+            border: 2px solid rgba(255, 180, 150, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.bab-btn::before {
-    content: "";
-    position: absolute;
-    width: 150%;
-    height: 300%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, rgba(255, 255, 255, 0) 70%);
-    top: -50%;
-    left: -50%;
-    transform: rotate(25deg);
-    transition: 0.5s;
-}
-
-.bab-btn:hover::before {
-    top: -20%;
-    left: -20%;
-}
-
-.bab-btn:hover {
-    background: linear-gradient(135deg, rgba(255, 150, 100, 1), rgba(200, 80, 50, 1));
-    box-shadow: 0 0 20px rgba(255, 120, 70, 1);
+        /* Efek Hover */
+        .bab-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 150, 100, 1), rgba(200, 80, 50, 1));
+            box-shadow: 0 0 20px rgba(255, 120, 70, 1);
         }
     </style>
 </head>
 <body>
 
+
+
     <div class="container">
-        <h1 class="judul">学習の章</h1>  
-        <p class="sub-judul">Pilih Bab untuk Belajar</p>
+        <h1 class="title">学習の章</h1>
+        <p class="subtitle">Pilih Bab untuk Belajar</p>
 
         <div class="bab-container">
             <a href="bab1.html" class="bab-btn">BAB 1</a>
@@ -99,6 +120,8 @@
             <a href="game.html" class="bab-btn">BAB 4</a>
         </div>
     </div>
+
+    
 
 </body>
 </html>
