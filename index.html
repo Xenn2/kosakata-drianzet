@@ -3,49 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Kosakata Jepang</title>
-    <link rel="stylesheet" href="style.css">
+    <title>テストの時間</title>
+    <style>
+        /* Font Import */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&display=swap');
+
+        /* Reset dasar */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Serif JP', serif;
+        }
+
+        /* Background utama */
+        body {
+            background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Kotak utama */
+        .container {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 25px 30px;
+            border-radius: 15px;
+            width: 85%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Judul */
+        h1 {
+            color: #fff;
+            font-size: 2rem;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Subtitle */
+        .subtitle {
+            color: #e0c097;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        /* Tombol */
+        .btn {
+            background: linear-gradient(90deg, #d97706, #b91c1c);
+            padding: 12px 24px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: linear-gradient(90deg, #b45309, #7f1d1d);
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
-    <audio id="bgm" loop>
-        <source src="epep.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Overlay Awal -->
-    <div id="overlay" onclick="startMusic()">
-        <h1>Klik untuk Mulai</h1>
-    </div>
-
-    <!-- Navigasi -->
-    <nav>
-        <button onclick="loadPage('bab.html')">Pilih Bab</button>
-        <button onclick="loadPage('game.html')">Mulai Game</button>
-    </nav>
-
-    <!-- Tempat Menampilkan Halaman -->
-    <div id="content">
-        <h2>Selamat Datang di Tes Kosakata</h2>
+    <div class="container">
+        <h1>テストの時間</h1>
+        <p class="subtitle">(Tes Ilmu Jepang)</p>
+        <button class="btn" onclick="mulai()">Mulai</button>
     </div>
 
     <script>
-        let isMusicPlaying = false;
-
-        function startMusic() {
-            document.getElementById("bgm").play();
-            document.getElementById("overlay").style.display = "none";
-            isMusicPlaying = true;
-        }
-
-        function loadPage(page) {
-            fetch(page)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById("content").innerHTML = data;
-                });
-
-            if (isMusicPlaying) {
-                document.getElementById("bgm").play();
-            }
+        function mulai() {
+            window.location.href = "cover.html";
         }
     </script>
 </body>
