@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background: url('0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+}
+
+#overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.bab-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    background: linear-gradient(45deg, #ffcc00, #ff3300);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 10px;
+}
