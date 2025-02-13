@@ -3,150 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>テストの時間</title>
-    <style>
-        /* Font Import */
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;700&display=swap');
-
-        /* Reset dasar */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Noto Serif JP', serif;
-        }
-
-        /* Background utama */
-        body {
-            background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center/cover;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        /* Layer awal */
-        .start-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 10;
-        }
-
-        .start-layer h1 {
-            color: #fff;
-            font-size: 2rem;
-            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.8);
-            margin-bottom: 20px;
-        }
-
-        /* Tombol Mulai (Layer Awal) */
-.start-btn {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 12px 24px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #fff;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.start-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    transform: scale(1.1);
-}
-
-/* Tombol Mulai (Halaman Utama) */
-.btn {
-    background: rgba(0, 0, 0, 0.4);
-    padding: 12px 24px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #fff;
-    border: 2px solid rgba(255, 255, 255, 0.5);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
-
-.btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    transform: scale(1.1);
-            }
-
-        /* Kotak utama */
-        .container {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 25px 30px;
-            border-radius: 15px;
-            width: 85%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            display: none;
-        }
-
-        /* Judul */
-        h1 {
-            color: #fff;
-            font-size: 2rem;
-            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.6);
-        }
-
-        /* Subtitle */
-        .subtitle {
-            color: #e0c097;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-        }
-
-        /* Tombol */
-        
-    </style>
+    <title>Web Kosakata Jepang</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Layer Awal -->
-    <div class="start-layer" id="startLayer">
-        <h1>Klik untuk memulai</h1>
-        <button class="start-btn" onclick="startGame()">Mulai</button>
-    </div>
-
-    <!-- Background Musik -->
-    <audio id="bgMusic" loop>
-        <source src="epep.mp3" type="audio/mp3">
+    <audio id="bgm" loop>
+        <source src="epep.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Kotak utama -->
-    <div class="container" id="mainContent">
-        <h1>テストの時間</h1>
-        <p class="subtitle">(Tes Ilmu Jepang)</p>
-        <button class="btn" onclick="window.location.href='bab.html'">Mulai</button>
+    <!-- Overlay Awal -->
+    <div id="overlay" onclick="startMusic()">
+        <h1>Klik untuk Mulai</h1>
+    </div>
+
+    <!-- Navigasi -->
+    <nav>
+        <button onclick="loadPage('bab.html')">Pilih Bab</button>
+        <button onclick="loadPage('game.html')">Mulai Game</button>
+    </nav>
+
+    <!-- Tempat Menampilkan Halaman -->
+    <div id="content">
+        <h2>Selamat Datang di Tes Kosakata</h2>
     </div>
 
     <script>
-        function startGame() {
-            document.getElementById('bgMusic').play();
-            document.getElementById('startLayer').style.display = 'none';
-            document.getElementById('mainContent').style.display = 'block';
+        let isMusicPlaying = false;
+
+        function startMusic() {
+            document.getElementById("bgm").play();
+            document.getElementById("overlay").style.display = "none";
+            isMusicPlaying = true;
+        }
+
+        function loadPage(page) {
+            fetch(page)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById("content").innerHTML = data;
+                });
+
+            if (isMusicPlaying) {
+                document.getElementById("bgm").play();
+            }
         }
     </script>
 </body>
