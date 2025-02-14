@@ -209,6 +209,26 @@
     </div>
 
     <script>
+        
+    // Cek apakah musik sudah berjalan
+    let bgMusic = document.getElementById("bg-music");
+    let isPlaying = sessionStorage.getItem("isMusicPlaying") === "true";
+
+    if (isPlaying) {
+        bgMusic.play();
+    }
+
+    // Update status musik setiap tombol ditekan
+    document.getElementById("music-btn").addEventListener("click", () => {
+        if (bgMusic.paused) {
+            bgMusic.play();
+            sessionStorage.setItem("isMusicPlaying", "true");
+        } else {
+            bgMusic.pause();
+            sessionStorage.setItem("isMusicPlaying", "false");
+        }
+    });
+    
         function startGame() {
             document.getElementById('startLayer').style.display = 'none'; // Hilangkan layar awal
             document.getElementById('loadingScreen').style.display = 'flex'; // Tampilkan loading screen
