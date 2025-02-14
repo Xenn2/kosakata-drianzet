@@ -7,12 +7,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: black; color: white; text-align: center; overflow: hidden; }
+        body { font-family: Arial, sans-serif; color: white; text-align: center; overflow: hidden; }
         
+        /* Background Video */
+        #videoBackground {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            object-fit: cover; z-index: -1;
+        }
+
         /* Overlay Start */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: url('minecraft_overlay.png') no-repeat center center/cover;
+            background: rgba(0, 0, 0, 0.8);
             display: flex; justify-content: center; align-items: center;
             flex-direction: column; z-index: 100;
         }
@@ -36,10 +42,10 @@
 
         /* Main Page Constant */
         #constant {
-            display: none;
+            display: none; opacity: 0;
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
             background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 10px;
-            box-shadow: 0px 0px 10px white; transition: 0.5s;
+            box-shadow: 0px 0px 10px white; transition: opacity 0.5s ease-in-out;
         }
         #mulaiButton {
             background: green; color: white; padding: 10px 20px;
@@ -48,8 +54,8 @@
 
         /* Jajaran Bab */
         #babContainer {
-            display: none;
-            animation: fadeIn 0.5s ease-in-out;
+            display: none; opacity: 0;
+            animation: fadeIn 0.5s ease-in-out forwards;
         }
         .babButton {
             background: black; color: cyan; padding: 10px; margin: 10px;
@@ -61,9 +67,19 @@
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Background Video -->
+    <video id="videoBackground" autoplay loop muted>
+        <source src="fdf7c5d6b4acb59bf0e890a50345c59e.mp4" type="video/mp4">
+        Browser tidak mendukung video.
+    </video>
 
     <!-- Overlay Start -->
     <div id="overlay">
@@ -107,8 +123,14 @@
                 if (progress >= 100) {
                     clearInterval(interval);
                     setTimeout(() => {
-                        document.getElementById("overlay").style.display = "none";
-                        document.getElementById("constant").style.display = "block";
+                        document.getElementById("overlay").style.animation = "fadeOut 0.5s forwards";
+                        setTimeout(() => {
+                            document.getElementById("overlay").style.display = "none";
+                            document.getElementById("constant").style.display = "block";
+                            setTimeout(() => {
+                                document.getElementById("constant").style.opacity = "1";
+                            }, 100);
+                        }, 500);
                     }, 500);
                 }
             }, 1000);
@@ -119,9 +141,12 @@
             setTimeout(() => {
                 document.getElementById("constant").style.display = "none";
                 document.getElementById("babContainer").style.display = "block";
+                setTimeout(() => {
+                    document.getElementById("babContainer").style.opacity = "1";
+                }, 100);
             }, 500);
         });
     </script>
 
 </body>
-</html> n
+                </html>
