@@ -45,17 +45,24 @@
             border-radius: 10px;
         }
 
-        #gojo {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-    width: 200px;
-    height: auto;
-    transition: transform 0.5s ease-out, opacity 0.3s ease-in;
-    pointer-events: none;
-        }
+        #music-toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    cursor: pointer;
+    color: white;
+    transition: background 0.3s;
+}
+
+#music-toggle:hover {
+    background: rgba(255, 255, 255, 0.5);
+            }
         .container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
@@ -123,6 +130,7 @@
     <audio id="ganbatteSound" src="ganbatte.mp3"></audio>
 
     <div class="container">
+        <button id="music-toggle">🔊</button>
         <h1> これはなんですか </h1>
         <div class="question-box" id="pertanyaan">Memuat soal...</div>
         <div id="pilihan"></div>
@@ -169,22 +177,29 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-    let gojo = document.getElementById("gojo");
-    let zoomSound = document.getElementById("zoomSound");
-    let ganbatteSound = document.getElementById("ganbatteSound");
+    let bgMusic = document.getElementById("bg-music");
+    let musicToggle = document.getElementById("music-toggle");
 
-    gojo.onload = function () {
-        console.log("Gambar berhasil dimuat.");
-        gojo.style.opacity = "1";
-        gojo.style.transform = "translate(-50%, -50%) scale(1)";
+    // Cek status terakhir dari sessionStorage
+    if (sessionStorage.getItem("musicPlaying") === "true") {
+        bgMusic.play();
+        musicToggle.innerText = "🔊";
+    } else {
+        musicToggle.innerText = "🔇";
+    }
 
-        zoomSound.play();
-        setTimeout(() => ganbatteSound.play(), 500);
-
-        setTimeout(() => {
-            document.getElementById("overlay").style.display = "none";
-        }, 2000);
-    };
+    // Toggle musik saat tombol diklik
+    musicToggle.addEventListener("click", function () {
+        if (bgMusic.paused) {
+            bgMusic.play();
+            musicToggle.innerText = "🔊";
+            sessionStorage.setItem("musicPlaying", "true");
+        } else {
+            bgMusic.pause();
+            musicToggle.innerText = "🔇";
+            sessionStorage.setItem("musicPlaying", "false");
+        }
+    });
 });
 
         mulaiSoal();
