@@ -24,45 +24,27 @@
             align-items: center;
         }
 
-        .overlay {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            z-index: 999;
-            overflow: hidden;
-        }
-
-        .overlay-text {
-            background: rgba(0, 0, 0, 0.85);
-            padding: 20px;
-            border-radius: 10px;
-        }
-
+        /* Tombol musik di pojok kanan atas layar */
         #music-toggle {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 20px;
-    cursor: pointer;
-    color: white;
-    transition: background 0.3s;
-}
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 22px;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+            z-index: 999;
+        }
 
-#music-toggle:hover {
-    background: rgba(255, 255, 255, 0.5);
-            }
+        #music-toggle:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
         .container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
@@ -116,20 +98,20 @@
 </head>
 <body>
 
+    <!-- Tombol Musik -->
+    <button id="music-toggle">🔊</button>
 
-    
-
+    <!-- Audio Musik -->
     <audio id="bg-music" loop>
         <source src="shirohae.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Audio Benar/Salah -->
     <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>
     <audio id="wrongSound" src="https://www.fesliyanstudios.com/play-mp3/4380"></audio>
-    <audio id="zoomSound" src="avoid.mp3"></audio>
-    <audio id="ganbatteSound" src="ganbatte.mp3"></audio>
 
+    <!-- Kontainer Soal -->
     <div class="container">
-        <button id="music-toggle">🔊</button>
         <h1> これはなんですか </h1>
         <div class="question-box" id="pertanyaan">Memuat soal...</div>
         <div id="pilihan"></div>
@@ -150,6 +132,31 @@
             { pertanyaan: "Pulang", jawaban: "かえる", opsi: ["いく", "くる", "のむ"] }
         ];
 
+        // Tombol Musik
+        const musicToggle = document.getElementById("music-toggle");
+        const bgMusic = document.getElementById("bg-music");
+
+        // Cek status musik di sessionStorage
+        if (sessionStorage.getItem("musicPlaying") === "true") {
+            bgMusic.play();
+            musicToggle.textContent = "🔊";
+        } else {
+            musicToggle.textContent = "🔇";
+        }
+
+        // Event Toggle Musik
+        musicToggle.addEventListener("click", function () {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicToggle.textContent = "🔊";
+                sessionStorage.setItem("musicPlaying", "true");
+            } else {
+                bgMusic.pause();
+                musicToggle.textContent = "🔇";
+                sessionStorage.setItem("musicPlaying", "false");
+            }
+        });
+
         function acakArray(array) {
             return array.sort(() => Math.random() - 0.5);
         }
@@ -163,45 +170,49 @@
             if (soalTersisa.length === 0) {
                 document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";
                 document.getElementById("pilihan").innerHTML = "";
-                document.getElementById("nilaiAkhir").innerHTML = `<p>Benar: ${benar} / ${soal.length}</p>`;
+                document.getElementById("nilaiAkhir").innerHTML = `
+                    <p>Benar: ${benar} / ${soal.length}</p>
+                    <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
+                `;
                 document.getElementById("nilaiAkhir").style.display = "block";
                 return;
             }
 
             let soalSekarang = soalTersisa.shift();
             document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;
+            document.getElementById("hasil").style.display = "none";
 
             let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);
-            document.getElementById("pilihan").innerHTML = pilihan.map(p => `<button class="btn" onclick="cekJawaban(this, '${p}', '${soalSekarang.jawaban}')">${p}</button>`).join("");
+            let pilihanHTML = "";
+            pilihan.forEach(pilihan => {
+                pilihanHTML += `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;
+            });
+            document.getElementById("pilihan").innerHTML = pilihanHTML;
         }
 
-        document.addEventListener("DOMContentLoaded", function () {
-    let bgMusic = document.getElementById("bg-music");
-    let musicToggle = document.getElementById("music-toggle");
+        function cekJawaban(pilihan, jawaban) {
+            let correctSound = document.getElementById("correctSound");
+            let wrongSound = document.getElementById("wrongSound");
 
-    // Cek status terakhir dari sessionStorage
-    if (sessionStorage.getItem("musicPlaying") === "true") {
-        bgMusic.play();
-        musicToggle.innerText = "🔊";
-    } else {
-        musicToggle.innerText = "🔇";
-    }
+            correctSound.pause();
+            correctSound.currentTime = 0;
+            wrongSound.pause();
+            wrongSound.currentTime = 0;
 
-    // Toggle musik saat tombol diklik
-    musicToggle.addEventListener("click", function () {
-        if (bgMusic.paused) {
-            bgMusic.play();
-            musicToggle.innerText = "🔊";
-            sessionStorage.setItem("musicPlaying", "true");
-        } else {
-            bgMusic.pause();
-            musicToggle.innerText = "🔇";
-            sessionStorage.setItem("musicPlaying", "false");
+            if (pilihan === jawaban) {
+                benar++;
+                document.getElementById("hasil").innerText = "✅ Benar!";
+                correctSound.play();
+            } else {
+                document.getElementById("hasil").innerText = "❌ Salah!";
+                wrongSound.play();
+            }
+
+            document.getElementById("hasil").style.display = "block";
+            setTimeout(tampilkanSoal, 1000);
         }
-    });
-});
 
-        mulaiSoal();
+        document.addEventListener("DOMContentLoaded", mulaiSoal);
     </script>
 
 </body>
