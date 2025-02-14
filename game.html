@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tebak Kosakata - Bab 4</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
     <style>
         * {
@@ -14,7 +14,7 @@
         }
 
         body {
-            font-family: 'Bangers', cursive;
+            font-family: 'Noto Sans JP', sans-serif;
             text-align: center;
             background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center fixed;
             background-size: cover;
@@ -25,38 +25,32 @@
             align-items: center;
         }
 
-        /* Tombol Musik lebih jelas */
+        /* Tombol Musik */
         #music-button {
             position: absolute;
             top: 20px;
             right: 20px;
-            padding: 10px 15px;
-            font-size: 16px;
+            padding: 10px 20px;
+            font-size: 18px;
             font-weight: bold;
-            background: rgba(0, 0, 0, 0.7); /* Background lebih kontras */
             color: white;
+            background: rgba(0, 0, 0, 0.7);
             border: 2px solid rgba(255, 255, 255, 0.8);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Efek glow */
+            font-family: 'Noto Sans JP', sans-serif;
         }
 
         #music-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            color: black;
-            transform: scale(1.1);
-        }
-
-        #music-button i {
-            margin-right: 8px;
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+            transform: scale(1.05);
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
@@ -75,7 +69,6 @@
             margin-bottom: 20px;
         }
 
-        /* Tombol jawaban lebih kontras */
         .btn {
             padding: 12px;
             font-size: 18px;
@@ -83,17 +76,18 @@
             border-radius: 30px;
             margin: 10px 0;
             font-weight: bold;
-            background: rgba(255, 255, 255, 0.9);
-            color: black;
-            border: 2px solid rgba(0, 0, 0, 0.5);
+            background: black;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
             transition: all 0.3s;
             display: block;
             width: 80%;
             margin: 10px auto;
+            font-family: 'Noto Sans JP', sans-serif;
         }
 
         .btn:hover {
-            background: rgba(200, 200, 200, 1);
+            background: rgba(50, 50, 50, 1);
             transform: scale(1.05);
         }
 
@@ -109,7 +103,7 @@
 <body>
 
     <!-- Tombol Musik -->
-    <button id="music-button"><i class="fas fa-music"></i> Musik</button>
+    <button id="music-button">Musik : OFF</button>
 
     <!-- Audio Musik -->
     <audio id="bg-music" loop>
@@ -137,27 +131,30 @@
             { pertanyaan: "Bangun", jawaban: "おきる", opsi: ["ねる", "はたらく", "やすむ"] },
             { pertanyaan: "Tidur", jawaban: "ねる", opsi: ["おきる", "べんきょうする", "やすむ"] },
             { pertanyaan: "Bekerja", jawaban: "はたらく", opsi: ["おきる", "やすむ", "べんきょうする"] },
-            { pertanyaan: "Istirahat", jawaban: "やすむ", opsi: ["はたらく", "べんきょうする", "かえる"] }
+            { pertanyaan: "Istirahat", jawaban: "やすむ", opsi: ["はたらく", "べんきょうする", "かえる"] },
+            { pertanyaan: "Belajar", jawaban: "べんきょうする", opsi: ["はたらく", "おきる", "かえる"] },
+            { pertanyaan: "Pulang", jawaban: "かえる", opsi: ["いく", "くる", "のむ"] }
         ];
 
+        // Tombol Musik
         const musicButton = document.getElementById("music-button");
         const bgMusic = document.getElementById("bg-music");
 
+        // Cek status musik di sessionStorage
         if (sessionStorage.getItem("musicPlaying") === "true") {
             bgMusic.play();
-            musicButton.innerHTML = '<i class="fas fa-volume-up"></i> Musik';
-        } else {
-            musicButton.innerHTML = '<i class="fas fa-volume-mute"></i> Musik';
+            musicButton.innerText = "Musik : ON";
         }
 
+        // Event Toggle Musik
         musicButton.addEventListener("click", function () {
             if (bgMusic.paused) {
                 bgMusic.play();
-                musicButton.innerHTML = '<i class="fas fa-volume-up"></i> Musik';
+                musicButton.innerText = "Musik : ON";
                 sessionStorage.setItem("musicPlaying", "true");
             } else {
                 bgMusic.pause();
-                musicButton.innerHTML = '<i class="fas fa-volume-mute"></i> Musik';
+                musicButton.innerText = "Musik : OFF";
                 sessionStorage.setItem("musicPlaying", "false");
             }
         });
@@ -182,12 +179,12 @@
 
             let soalSekarang = soalTersisa.shift();
             document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;
+            document.getElementById("hasil").style.display = "none";
 
-            let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);
-            let pilihanHTML = "";
-            pilihan.forEach(pilihan => {
-                pilihanHTML += `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;
-            });
+            let pilihanHTML = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi])
+                .map(pilihan => `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`)
+                .join("");
+
             document.getElementById("pilihan").innerHTML = pilihanHTML;
         }
 
