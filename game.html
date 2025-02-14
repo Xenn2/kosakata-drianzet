@@ -26,30 +26,32 @@
         }
 
         /* Tombol musik modern */
-        #music-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 20px;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
-            z-index: 999;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
+        #music-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.6); /* Background lebih gelap */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Efek glow putih */
+    cursor: pointer;
+    transition: all 0.3s;
+}
 
-        #music-toggle:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+#music-button img {
+    width: 70%;
+    filter: invert(1); /* Ubah warna ikon menjadi putih */
+}
 
+#music-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+    transform: scale(1.1);
+}
         .container {
             background: rgba(0, 0, 0, 0.6); /* Lebih gelap */
             backdrop-filter: blur(12px);
