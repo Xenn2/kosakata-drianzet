@@ -128,22 +128,20 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            let bgMusic = document.getElementById("bg-music");
-            let overlay = document.getElementById("overlay");
+    let bgMusic = document.getElementById("bg-music");
+    let overlay = document.getElementById("overlay");
 
-            // Cek apakah musik sudah pernah diputar
-            if (sessionStorage.getItem("musicPlayed")) {
-                bgMusic.play();
-                overlay.style.display = "none"; // Langsung hilangkan overlay jika musik sudah pernah diputar
-            }
-
-            // Klik overlay untuk memulai musik jika belum diputar
-            overlay.addEventListener("click", function () {
-                bgMusic.play();
-                sessionStorage.setItem("musicPlayed", "true");
-                overlay.style.display = "none";
-            });
+    if (sessionStorage.getItem("musicPlaying")) {
+        bgMusic.play();
+        overlay.style.display = "none"; // Hilangkan setelah musik aktif
+    } else {
+        overlay.addEventListener("click", function () {
+            bgMusic.play();
+            sessionStorage.setItem("musicPlaying", "true");
+            overlay.style.display = "none"; // Hilangkan setelah diklik
         });
+    }
+});
 
         
     </script>
