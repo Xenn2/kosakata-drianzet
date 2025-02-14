@@ -46,15 +46,16 @@
         }
 
         #gojo {
-            position: absolute;
-            width: 200px;
-            height: auto;
-            bottom: -300px;
-            opacity: 0;
-            transition: transform 0.6s ease-out, opacity 0.3s ease-in;
-            pointer-events: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    width: 200px;
+    height: auto;
+    transition: transform 0.5s ease-out, opacity 0.3s ease-in;
+    pointer-events: none;
         }
-
         .container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
@@ -168,20 +169,23 @@
         }
 
         document.addEventListener("DOMContentLoaded", function () {
-            let gojo = document.getElementById("gojo");
-            let zoomSound = document.getElementById("zoomSound");
-            let ganbatteSound = document.getElementById("ganbatteSound");
+    let gojo = document.getElementById("gojo");
+    let zoomSound = document.getElementById("zoomSound");
+    let ganbatteSound = document.getElementById("ganbatteSound");
 
-            gojo.style.opacity = "1";
-            gojo.style.transform = "translateY(-150px)";
-            zoomSound.play();
-            setTimeout(() => ganbatteSound.play(), 500);
-            
-            setTimeout(() => {
-                document.getElementById("overlay").style.display = "none";
-                document.getElementById("bg-music").play();
-            }, 2000);
-        });
+    gojo.onload = function () {
+        console.log("Gambar berhasil dimuat.");
+        gojo.style.opacity = "1";
+        gojo.style.transform = "translate(-50%, -50%) scale(1)";
+
+        zoomSound.play();
+        setTimeout(() => ganbatteSound.play(), 500);
+
+        setTimeout(() => {
+            document.getElementById("overlay").style.display = "none";
+        }, 2000);
+    };
+});
 
         mulaiSoal();
     </script>
