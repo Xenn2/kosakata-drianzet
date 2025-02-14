@@ -6,156 +6,86 @@
   <title>Tes Kosakata</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
   <style>
-    /* RESET & FONT */
-    * {
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
-      font-family: 'Press Start 2P', cursive;
-    }
-    body {
-      background: black;
-      overflow: hidden;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Press Start 2P', cursive; }
+    body { background: black; overflow: hidden; }
+
     /* Background Video */
     #videoBg {
-      position: fixed;
-      top: 0; 
-      left: 0;
-      width: 100%;
-      height: 100%;
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
       object-fit: cover;
       z-index: -1;
     }
 
-    /* ========== OVERLAY MUSIK (STEP 1) ========== */
+    /* Overlay Musik */
     #overlayMusic {
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: white;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; color: white;
       z-index: 10;
     }
-    #overlayMusic h1 {
-      font-size: 20px;
-      margin-bottom: 20px;
-    }
     #btnStartMusic {
-      background: green;
-      color: white;
-      padding: 15px 30px;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
+      background: green; color: white;
+      padding: 15px 30px; border: none;
+      font-size: 16px; cursor: pointer;
       border-radius: 5px;
-      text-transform: uppercase;
     }
-    #btnStartMusic:hover {
-      background: limegreen;
-    }
+    #btnStartMusic:hover { background: limegreen; }
 
-    /* Loading bar Minecraft (5 detik) */
-    #loadingContainer {
-      display: none;
-      margin-top: 30px;
-    }
-    #loadingText {
-      margin-bottom: 10px;
-      font-size: 14px;
-    }
+    /* Loading Bar */
+    #loadingContainer { display: none; margin-top: 30px; }
     #loadingBarWrap {
-      width: 300px;
-      height: 20px;
-      background: gray;
-      border: 4px solid black;
-      border-radius: 5px;
-      position: relative;
+      width: 300px; height: 20px; background: gray;
+      border: 4px solid black; border-radius: 5px;
     }
-    #loadingBar {
-      width: 0;
-      height: 100%;
-      background: limegreen;
-      border-radius: 5px;
-      transition: width 0.5s;
-    }
+    #loadingBar { width: 0; height: 100%; background: limegreen; border-radius: 5px; transition: width 0.5s; }
 
-    /* ========== MAIN PAGE (STEP 2) ========== */
+    /* Main Page */
     #mainPage {
       display: none; 
-      position: fixed;
-      top: 0; left: 0;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
-      color: white;
-      text-align: center;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
       background: rgba(0, 0, 0, 0.7);
-      z-index: 9;
-      opacity: 1; /* Untuk fade-out */
-      transition: opacity 0.8s;
-    }
-    #mainPageContent {
-      margin-top: 15vh;
+      color: white; text-align: center;
+      display: flex; justify-content: center; align-items: center;
+      flex-direction: column; opacity: 1;
+      transition: opacity 0.8s ease-in-out;
     }
     #btnMulaiMain {
-      background: green;
-      color: white;
-      padding: 15px 30px;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      text-transform: uppercase;
-      margin-top: 20px;
+      background: green; color: white;
+      padding: 15px 30px; border: none;
+      font-size: 16px; cursor: pointer;
+      border-radius: 5px; margin-top: 20px;
     }
-    #btnMulaiMain:hover {
-      background: limegreen;
-    }
+    #btnMulaiMain:hover { background: limegreen; }
 
-    /* Fade-out anim */
-    .fade-out {
-      opacity: 0;
-    }
+    /* Fade-out animasi */
+    .fade-out { opacity: 0; }
 
-    /* ========== BAB SECTION (STEP 3) ========== */
+    /* Bab Section */
     #babSection {
-      display: none; 
-      position: fixed;
-      top: 0; left: 0;
+      display: none;
+      position: fixed; top: 0; left: 0;
       width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.8);
-      color: white;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      z-index: 8;
+      color: white; justify-content: center; align-items: center;
+      text-align: center; flex-direction: column;
+      opacity: 0; transform: scale(0.9);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     }
-    #babContent {
-      margin-top: 10vh;
-    }
+    .showBab { display: flex !important; opacity: 1; transform: scale(1); }
+
     .babBtn {
-      display: block;
-      margin: 15px auto;
-      width: 200px;
-      padding: 15px;
-      background: #333;
-      color: cyan;
-      border: 2px solid cyan;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
+      display: block; margin: 15px auto;
+      width: 200px; padding: 15px;
+      background: #333; color: cyan;
+      border: 2px solid cyan; border-radius: 5px;
+      cursor: pointer; font-size: 16px;
     }
-    .babBtn:hover {
-      background: cyan;
-      color: black;
-    }
+    .babBtn:hover { background: cyan; color: black; }
   </style>
 </head>
 <body>
@@ -170,12 +100,12 @@
     <source src="shirohae.mp3" type="audio/mp3">
   </audio>
 
-  <!-- OVERLAY MUSIK -->
+  <!-- Overlay Musik -->
   <div id="overlayMusic">
-    <h1>Minecraft Music Overlay</h1>
+    <h1>日本</h1>
     <button id="btnStartMusic">Start</button>
 
-    <!-- Loading bar Minecraft 5 detik -->
+    <!-- Loading bar Minecraft -->
     <div id="loadingContainer">
       <p id="loadingText">Loading...</p>
       <div id="loadingBarWrap">
@@ -184,24 +114,20 @@
     </div>
   </div>
 
-  <!-- MAIN PAGE -->
+  <!-- Main Page -->
   <div id="mainPage">
-    <div id="mainPageContent">
-      <h2>テストの時間</h2>
-      <p>(Tes Kosakata)</p>
-      <button id="btnMulaiMain">Mulai</button>
-    </div>
+    <h2>テストの時間</h2>
+    <p>(Tes Kosakata)</p>
+    <button id="btnMulaiMain">Mulai</button>
   </div>
 
-  <!-- BAB SECTION -->
+  <!-- Bab Section -->
   <div id="babSection">
-    <div id="babContent">
-      <h2>Pilih Bab untuk Belajar</h2>
-      <button class="babBtn">BAB 1</button>
-      <button class="babBtn">BAB 2</button>
-      <button class="babBtn">BAB 3</button>
-      <button class="babBtn">BAB 4</button>
-    </div>
+    <h2>Pilih Bab untuk Belajar</h2>
+    <button class="babBtn">BAB 1</button>
+    <button class="babBtn">BAB 2</button>
+    <button class="babBtn">BAB 3</button>
+    <button class="babBtn">BAB 4</button>
   </div>
 
   <script>
@@ -214,21 +140,12 @@
     const babSection = document.getElementById('babSection');
     const bgMusic = document.getElementById('bgMusic');
 
-    let isMusicPlaying = false;
-
-    // STEP 1: Klik "Start" => Musik nyala => Muncul loading bar 5 detik
+    // STEP 1: Klik "Start" => Musik nyala => Muncul loading bar
     btnStartMusic.addEventListener('click', () => {
-      // Mulai musik
       bgMusic.play();
-      isMusicPlaying = true;
-
-      // Sembunyikan tombol "Start"
       btnStartMusic.style.display = 'none';
-
-      // Tampilkan loading bar
       loadingContainer.style.display = 'block';
 
-      // Jalankan progress bar 5 detik
       let progress = 0;
       let interval = setInterval(() => {
         progress += 2;
@@ -237,23 +154,19 @@
         if (progress >= 100) {
           clearInterval(interval);
           setTimeout(() => {
-            // OverlayMusic hilang
             overlayMusic.style.display = 'none';
-
-            // Muncul mainPage
-            mainPage.style.display = 'block';
+            mainPage.style.display = 'flex';
           }, 500);
         }
-      }, 100); // 100ms x 50 = 5 detik
+      }, 100);
     });
 
-    // STEP 2: Klik "Mulai" => mainPage fade out => babSection muncul
+    // STEP 2: Klik "Mulai" => mainPage fade-out => babSection muncul dengan efek
     btnMulaiMain.addEventListener('click', () => {
-      // Fade-out mainPage
       mainPage.classList.add('fade-out');
       setTimeout(() => {
         mainPage.style.display = 'none';
-        babSection.style.display = 'flex';
+        babSection.classList.add('showBab');
       }, 800);
     });
   </script>
