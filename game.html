@@ -25,36 +25,38 @@
             align-items: center;
         }
 
-        /* Tombol musik modern */
-        #music-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.6); /* Background lebih gelap */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Efek glow putih */
-    cursor: pointer;
-    transition: all 0.3s;
-}
+        /* Tombol Musik */
+        #music-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid white;
+        }
 
-#music-button img {
-    width: 70%;
-    filter: invert(1); /* Ubah warna ikon menjadi putih */
-}
+        #music-toggle i {
+            font-size: 28px;
+            color: white;
+        }
 
-#music-button:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 1);
-    transform: scale(1.1);
-}
+        #music-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+        }
+
         .container {
-            background: rgba(0, 0, 0, 0.6); /* Lebih gelap */
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
@@ -74,25 +76,27 @@
         }
 
         .btn {
-    padding: 12px;
-    font-size: 18px;
-    cursor: pointer;
-    border-radius: 30px;
-    margin: 10px 0;
-    font-weight: bold;
-    background: black;
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.5); /* Garis putih tipis */
-    transition: all 0.3s;
-    display: block;
-    width: 80%;
-    margin: 10px auto;
-}
+            padding: 12px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 30px;
+            margin: 10px 0;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff8c00, #ff2d55);
+            color: white;
+            border: 2px solid white;
+            transition: all 0.3s;
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+        }
 
-.btn:hover {
-    background: rgba(50, 50, 50, 1);
-    transform: scale(1.05);
-            }
+        .btn:hover {
+            background: linear-gradient(45deg, #ff2d55, #ff8c00);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
 
         #hasil, #nilaiAkhir {
             font-size: 22px;
@@ -139,11 +143,9 @@
             { pertanyaan: "Pulang", jawaban: "かえる", opsi: ["いく", "くる", "のむ"] }
         ];
 
-        // Tombol Musik
         const musicToggle = document.getElementById("music-toggle");
         const bgMusic = document.getElementById("bg-music");
 
-        // Cek status musik di sessionStorage
         if (sessionStorage.getItem("musicPlaying") === "true") {
             bgMusic.play();
             musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
@@ -151,7 +153,6 @@
             musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
         }
 
-        // Event Toggle Musik
         musicToggle.addEventListener("click", function () {
             if (bgMusic.paused) {
                 bgMusic.play();
@@ -175,52 +176,15 @@
 
         function tampilkanSoal() {
             if (soalTersisa.length === 0) {
-                document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";
-                document.getElementById("pilihan").innerHTML = "";
-                document.getElementById("nilaiAkhir").innerHTML = `
-                    <p>Benar: ${benar} / ${soal.length}</p>
-                    <button class="btn" onclick="location.href='bab.html'">Gas Lagi!</button>
-                `;
                 document.getElementById("nilaiAkhir").style.display = "block";
                 return;
             }
-
             let soalSekarang = soalTersisa.shift();
             document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;
-            document.getElementById("hasil").style.display = "none";
-
-            let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);
-            let pilihanHTML = "";
-            pilihan.forEach(pilihan => {
-                pilihanHTML += `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;
-            });
-            document.getElementById("pilihan").innerHTML = pilihanHTML;
-        }
-
-        function cekJawaban(pilihan, jawaban) {
-            let correctSound = document.getElementById("correctSound");
-            let wrongSound = document.getElementById("wrongSound");
-
-            correctSound.pause();
-            correctSound.currentTime = 0;
-            wrongSound.pause();
-            wrongSound.currentTime = 0;
-
-            if (pilihan === jawaban) {
-                benar++;
-                document.getElementById("hasil").innerText = "✅ Benar!";
-                correctSound.play();
-            } else {
-                document.getElementById("hasil").innerText = "❌ Salah!";
-                wrongSound.play();
-            }
-
-            document.getElementById("hasil").style.display = "block";
-            setTimeout(tampilkanSoal, 1000);
         }
 
         document.addEventListener("DOMContentLoaded", mulaiSoal);
     </script>
 
 </body>
-</html>
+    </html>
