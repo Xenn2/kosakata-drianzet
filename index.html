@@ -1,222 +1,262 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tes Kosakata</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tes Kosakata</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"/>
+  <style>
+    /* RESET & FONT */
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      font-family: 'Press Start 2P', cursive;
+    }
+    body {
+      background: black;
+      overflow: hidden;
+    }
+    /* Background Video */
+    #videoBg {
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            overflow: hidden;
-            background: black;
-        }
+    /* ========== OVERLAY MUSIK (STEP 1) ========== */
+    #overlayMusic {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      z-index: 10;
+    }
+    #overlayMusic h1 {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    #btnStartMusic {
+      background: green;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-transform: uppercase;
+    }
+    #btnStartMusic:hover {
+      background: limegreen;
+    }
 
-        /* Overlay untuk musik */
-        #musicOverlay {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            color: white;
-        }
+    /* Loading bar Minecraft (5 detik) */
+    #loadingContainer {
+      display: none;
+      margin-top: 30px;
+    }
+    #loadingText {
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    #loadingBarWrap {
+      width: 300px;
+      height: 20px;
+      background: gray;
+      border: 4px solid black;
+      border-radius: 5px;
+      position: relative;
+    }
+    #loadingBar {
+      width: 0;
+      height: 100%;
+      background: limegreen;
+      border-radius: 5px;
+      transition: width 0.5s;
+    }
 
-        #startMusic {
-            padding: 15px 30px;
-            background: green;
-            color: white;
-            font-size: 20px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-        }
+    /* ========== MAIN PAGE (STEP 2) ========== */
+    #mainPage {
+      display: none; 
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      color: white;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9;
+      opacity: 1; /* Untuk fade-out */
+      transition: opacity 0.8s;
+    }
+    #mainPageContent {
+      margin-top: 15vh;
+    }
+    #btnMulaiMain {
+      background: green;
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-transform: uppercase;
+      margin-top: 20px;
+    }
+    #btnMulaiMain:hover {
+      background: limegreen;
+    }
 
-        /* Loading bar */
-        #loadingBar {
-            width: 80%;
-            height: 20px;
-            background: gray;
-            border-radius: 10px;
-            margin-top: 20px;
-            display: none;
-            position: relative;
-        }
+    /* Fade-out anim */
+    .fade-out {
+      opacity: 0;
+    }
 
-        #loadingProgress {
-            width: 0;
-            height: 100%;
-            background: limegreen;
-            border-radius: 10px;
-        }
-
-        /* Background video */
-        #videoBg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-
-        /* Main Page */
-        #constant {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 8;
-            display: none;
-        }
-
-        .start-container {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
-            color: white;
-        }
-
-        #startButton {
-            padding: 10px 20px;
-            background: green;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-        }
-
-        /* Bab Section */
-        #babSection {
-            display: none;
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 7;
-        }
-
-        .bab-button {
-            padding: 15px;
-            background: #333;
-            color: cyan;
-            margin: 10px;
-            width: 200px;
-            text-align: center;
-            cursor: pointer;
-            border-radius: 5px;
-            border: 1px solid cyan;
-        }
-
-        /* Animasi Transisi */
-        .fade-out {
-            opacity: 0;
-            transition: opacity 1s;
-        }
-    </style>
+    /* ========== BAB SECTION (STEP 3) ========== */
+    #babSection {
+      display: none; 
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      color: white;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      z-index: 8;
+    }
+    #babContent {
+      margin-top: 10vh;
+    }
+    .babBtn {
+      display: block;
+      margin: 15px auto;
+      width: 200px;
+      padding: 15px;
+      background: #333;
+      color: cyan;
+      border: 2px solid cyan;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .babBtn:hover {
+      background: cyan;
+      color: black;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Background Video -->
-    <video id="videoBg" autoplay loop muted>
-        <source src="fdf7c5d6b4acb59bf0e890a50345c59e.mp4" type="video/mp4">
-    </video>
+  <!-- Background Video -->
+  <video id="videoBg" autoplay loop muted>
+    <source src="fdf7c5d6b4acb59bf0e890a50345c59e.mp4" type="video/mp4">
+  </video>
 
-    <!-- Overlay Musik -->
-    <div id="musicOverlay">
-        <button id="startMusic">Mulai</button>
-        <div id="loadingBar">
-            <div id="loadingProgress"></div>
-        </div>
+  <!-- Audio Musik -->
+  <audio id="bgMusic" loop>
+    <source src="shirohae.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- OVERLAY MUSIK -->
+  <div id="overlayMusic">
+    <h1>Minecraft Music Overlay</h1>
+    <button id="btnStartMusic">Start</button>
+
+    <!-- Loading bar Minecraft 5 detik -->
+    <div id="loadingContainer">
+      <p id="loadingText">Loading...</p>
+      <div id="loadingBarWrap">
+        <div id="loadingBar"></div>
+      </div>
     </div>
+  </div>
 
-    <!-- Main Page -->
-    <div id="constant">
-        <div class="start-container">
-            <h2>テストの時間</h2>
-            <p>(Tes Kosakata)</p>
-            <button id="startButton">Mulai</button>
-        </div>
+  <!-- MAIN PAGE -->
+  <div id="mainPage">
+    <div id="mainPageContent">
+      <h2>テストの時間</h2>
+      <p>(Tes Kosakata)</p>
+      <button id="btnMulaiMain">Mulai</button>
     </div>
+  </div>
 
-    <!-- Bab Section -->
-    <div id="babSection">
-        <h2>Pilih Bab untuk Belajar</h2>
-        <div class="bab-button">BAB 1</div>
-        <div class="bab-button">BAB 2</div>
-        <div class="bab-button">BAB 3</div>
-        <div class="bab-button">BAB 4</div>
+  <!-- BAB SECTION -->
+  <div id="babSection">
+    <div id="babContent">
+      <h2>Pilih Bab untuk Belajar</h2>
+      <button class="babBtn">BAB 1</button>
+      <button class="babBtn">BAB 2</button>
+      <button class="babBtn">BAB 3</button>
+      <button class="babBtn">BAB 4</button>
     </div>
+  </div>
 
-    <!-- Audio -->
-    <audio id="backgroundMusic" loop>
-        <source src="shirohae.mp3" type="audio/mpeg">
-    </audio>
+  <script>
+    const overlayMusic = document.getElementById('overlayMusic');
+    const btnStartMusic = document.getElementById('btnStartMusic');
+    const loadingContainer = document.getElementById('loadingContainer');
+    const loadingBar = document.getElementById('loadingBar');
+    const mainPage = document.getElementById('mainPage');
+    const btnMulaiMain = document.getElementById('btnMulaiMain');
+    const babSection = document.getElementById('babSection');
+    const bgMusic = document.getElementById('bgMusic');
 
-    <script>
-        const musicOverlay = document.getElementById("musicOverlay");
-        const startMusicButton = document.getElementById("startMusic");
-        const backgroundMusic = document.getElementById("backgroundMusic");
-        const loadingBar = document.getElementById("loadingBar");
-        const loadingProgress = document.getElementById("loadingProgress");
-        const constant = document.getElementById("constant");
-        const startButton = document.getElementById("startButton");
-        const babSection = document.getElementById("babSection");
+    let isMusicPlaying = false;
 
-        // Saat klik overlay musik
-        startMusicButton.addEventListener("click", function () {
-            backgroundMusic.play();
-            startMusicButton.style.display = "none"; // Sembunyikan tombol
-            loadingBar.style.display = "block"; // Munculkan loading bar
-            startLoadingBar();
-        });
+    // STEP 1: Klik "Start" => Musik nyala => Muncul loading bar 5 detik
+    btnStartMusic.addEventListener('click', () => {
+      // Mulai musik
+      bgMusic.play();
+      isMusicPlaying = true;
 
-        // Fungsi loading bar 5 detik
-        function startLoadingBar() {
-            let progress = 0;
-            let interval = setInterval(() => {
-                progress += 2;
-                loadingProgress.style.width = progress + "%";
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        musicOverlay.classList.add("fade-out");
-                        setTimeout(() => {
-                            musicOverlay.style.display = "none";
-                            constant.style.display = "flex";
-                        }, 1000);
-                    }, 500);
-                }
-            }, 100);
+      // Sembunyikan tombol "Start"
+      btnStartMusic.style.display = 'none';
+
+      // Tampilkan loading bar
+      loadingContainer.style.display = 'block';
+
+      // Jalankan progress bar 5 detik
+      let progress = 0;
+      let interval = setInterval(() => {
+        progress += 2;
+        loadingBar.style.width = progress + '%';
+
+        if (progress >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            // OverlayMusic hilang
+            overlayMusic.style.display = 'none';
+
+            // Muncul mainPage
+            mainPage.style.display = 'block';
+          }, 500);
         }
+      }, 100); // 100ms x 50 = 5 detik
+    });
 
-        // Saat klik "Mulai" pada halaman utama
-        startButton.addEventListener("click", function () {
-            constant.classList.add("fade-out");
-            setTimeout(() => {
-                constant.style.display = "none";
-                babSection.style.display = "flex";
-            }, 1000);
-        });
-    </script>
+    // STEP 2: Klik "Mulai" => mainPage fade out => babSection muncul
+    btnMulaiMain.addEventListener('click', () => {
+      // Fade-out mainPage
+      mainPage.classList.add('fade-out');
+      setTimeout(() => {
+        mainPage.style.display = 'none';
+        babSection.style.display = 'flex';
+      }, 800);
+    });
+  </script>
 
 </body>
 </html>
