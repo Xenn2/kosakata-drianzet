@@ -15,6 +15,31 @@
             object-fit: cover; z-index: -1;
         }
 
+        /* Overlay Start */
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex; justify-content: center; align-items: center;
+            flex-direction: column; z-index: 100;
+        }
+        #startButton {
+            font-family: 'Press Start 2P', cursive;
+            background: green; color: white; border: none; padding: 15px 30px;
+            cursor: pointer; font-size: 20px;
+        }
+        
+        /* Progress Bar */
+        #progressContainer {
+            width: 300px; height: 30px; background: gray;
+            border: 3px solid white; margin-top: 20px; display: none;
+        }
+        #progressBar {
+            width: 0%; height: 100%; background: limegreen;
+        }
+        #loadingText {
+            font-family: 'Press Start 2P', cursive; margin-top: 10px; display: none;
+        }
+
         /* CONSTANT - Minecraft Style */
         #constant {
             display: none; opacity: 0;
@@ -71,15 +96,34 @@
         .babButton:hover {
             background: #50311a;
         }
+
+        /* Animasi */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
     <!-- Background Video -->
     <video id="videoBackground" autoplay loop muted>
-        <source src="minecraft_bg.mp4" type="video/mp4">
+        <source src="fdf7c5d6b4acb59bf0e890a50345c59e.mp4" type="video/mp4">
         Browser tidak mendukung video.
     </video>
+
+    <!-- Overlay Start -->
+    <div id="overlay">
+        <button id="startButton">START</button>
+        <div id="progressContainer">
+            <div id="progressBar"></div>
+        </div>
+        <div id="loadingText">Loading...</div>
+    </div>
 
     <!-- Constant - Minecraft Style -->
     <div id="constant">
@@ -96,7 +140,37 @@
         <button class="babButton">BAB 4</button>
     </div>
 
+    <audio id="bgMusic" src="shirohae.mp3" loop></audio>
+
     <script>
+        document.getElementById("startButton").addEventListener("click", function() {
+            let music = document.getElementById("bgMusic");
+            music.play();
+
+            document.getElementById("startButton").style.display = "none";
+            document.getElementById("progressContainer").style.display = "block";
+            document.getElementById("loadingText").style.display = "block";
+
+            let progress = 0;
+            let interval = setInterval(function() {
+                progress += 20;
+                document.getElementById("progressBar").style.width = progress + "%";
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById("overlay").style.animation = "fadeOut 0.5s forwards";
+                        setTimeout(() => {
+                            document.getElementById("overlay").style.display = "none";
+                            document.getElementById("constant").style.display = "block";
+                            setTimeout(() => {
+                                document.getElementById("constant").style.opacity = "1";
+                            }, 100);
+                        }, 500);
+                    }, 500);
+                }
+            }, 1000);
+        });
+
         document.getElementById("mulaiButton").addEventListener("click", function() {
             document.getElementById("constant").style.opacity = "0";
             setTimeout(() => {
