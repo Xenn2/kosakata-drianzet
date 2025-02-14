@@ -5,35 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bab Pembelajaran</title>
     <style>
-        /* Background Full */
-        body {
+        /* Import Font */
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        /* Reset dasar */
+        * {
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            box-sizing: border-box;
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        /* Background utama */
+        body {
+            background: black;
             height: 100vh;
-            background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center/cover;
-            font-family: Arial, sans-serif;
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Background Video */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
         }
 
         /* Overlay untuk Musik */
         .overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0); /* Transparan sepenuhnya */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-    z-index: 999;
-    opacity: 0; /* Hilangkan secara visual */
-}
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 999;
         }
 
         /* Container */
@@ -45,6 +63,7 @@
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-align: center;
         }
 
         /* Judul */
@@ -100,18 +119,27 @@
             background: linear-gradient(135deg, rgba(255, 150, 100, 1), rgba(200, 80, 50, 1));
             box-shadow: 0 0 20px rgba(255, 120, 70, 1);
         }
+
     </style>
 </head>
 <body>
 
+    <!-- Background Video -->
+    <video class="background-video" autoplay loop muted>
+        <source src="fdf7c5d6b4acb59bf0e890a50345c59e.mp4" type="video/mp4">
+    </video>
+
+    <!-- Overlay Awal -->
     <div class="overlay" id="overlay">
-        <div class="overlay">Klik untuk Mulai</div>
+        Klik untuk Memulai
     </div>
 
+    <!-- Audio -->
     <audio id="bg-music" loop>
         <source src="shirohae.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- Container Utama -->
     <div class="container">
         <h1 class="title">学習の章</h1>
         <p class="subtitle">Pilih Bab untuk Belajar</p>
@@ -124,27 +152,27 @@
         </div>
     </div>
 
-    
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-    let bgMusic = document.getElementById("bg-music");
-    let overlay = document.getElementById("overlay");
+            let bgMusic = document.getElementById("bg-music");
+            let overlay = document.getElementById("overlay");
 
-    if (sessionStorage.getItem("musicPlaying")) {
-        bgMusic.play();
-        overlay.style.display = "none"; // Hilangkan setelah musik aktif
-    } else {
-        overlay.addEventListener("click", function () {
-            bgMusic.play();
-            sessionStorage.setItem("musicPlaying", "true");
-            overlay.style.display = "none"; // Hilangkan setelah diklik
+            // Cek apakah musik sudah dimainkan sebelumnya
+            if (sessionStorage.getItem("musicPlaying")) {
+                bgMusic.play();
+                overlay.style.display = "none";
+            } else {
+                overlay.addEventListener("click", function () {
+                    // Putar musik
+                    bgMusic.play();
+                    sessionStorage.setItem("musicPlaying", "true");
+
+                    // Hilangkan overlay setelah diklik
+                    overlay.style.display = "none";
+                });
+            }
         });
-    }
-});
-
-        
     </script>
 
 </body>
-</html>
+                                                         </html>
