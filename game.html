@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tebak Kosakata - Bab 4</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
     <style>
         * {
             margin: 0;
@@ -26,23 +27,22 @@
         }
 
         /* Tombol Musik */
-         #music-button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 30px;
-        color: white;
-        opacity: 0.8;
-        transition: opacity 0.3s ease;
-    }
+        #music-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 30px;
+            color: white;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
 
-    #music-button:hover {
-        opacity: 1;
-    }
-
+        #music-button:hover {
+            opacity: 1;
+        }
 
         .container {
             background: rgba(0, 0, 0, 0.6);
@@ -98,13 +98,14 @@
 </head>
 <body>
 
+    <!-- Tombol Musik -->
     <button id="music-button">
-    <i id="music-icon" class="fas fa-music"></i>
-</button>
+        <i id="music-icon" class="fas fa-music"></i>
+    </button>
 
-<audio id="bg-music" loop>
-    <source src="shirohae.mp3" type="audio/mpeg">
-</audio>
+    <audio id="bg-music" loop>
+        <source src="shirohae.mp3" type="audio/mpeg">
+    </audio>
 
     <!-- Audio Benar/Salah -->
     <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>
@@ -112,7 +113,7 @@
 
     <!-- Kontainer Soal -->
     <div class="container">
-        <h1> これはなんですか </h1>
+        <h1>これはなんですか</h1>
         <div class="question-box" id="pertanyaan">Memuat soal...</div>
         <div id="pilihan"></div>
         <div id="hasil"></div>
@@ -132,40 +133,43 @@
             { pertanyaan: "Pulang", jawaban: "かえる", opsi: ["いく", "くる", "のむ"] }
         ];
 
-        // Tombol Musik
-        // Tombol Musik
-// Tombol Musik
-const musicButton = document.getElementById("music-button");
-    const musicIcon = document.getElementById("music-icon");
-    const bgMusic = document.getElementById("bg-music");
+        // Musik
+        const musicButton = document.getElementById("music-button");
+        const musicIcon = document.getElementById("music-icon");
+        const bgMusic = document.getElementById("bg-music");
 
-    // Cek status musik saat halaman dimuat
-    let isPlaying = false; // Default musik mati
+        let isPlaying = localStorage.getItem("musicStatus") === "true";
 
-    function updateMusicIcon() {
-        if (isPlaying) {
-            musicIcon.classList.remove("fa-music");
-            musicIcon.classList.add("fa-volume-mute");
-        } else {
-            musicIcon.classList.remove("fa-volume-mute");
-            musicIcon.classList.add("fa-music");
+        function updateMusicIcon() {
+            if (isPlaying) {
+                musicIcon.classList.remove("fa-music");
+                musicIcon.classList.add("fa-volume-mute");
+            } else {
+                musicIcon.classList.remove("fa-volume-mute");
+                musicIcon.classList.add("fa-music");
+            }
         }
-    }
 
-    musicButton.addEventListener("click", function () {
-        if (bgMusic.paused) {
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                isPlaying = true;
+            } else {
+                bgMusic.pause();
+                isPlaying = false;
+            }
+            localStorage.setItem("musicStatus", isPlaying);
+            updateMusicIcon();
+        }
+
+        musicButton.addEventListener("click", toggleMusic);
+
+        if (isPlaying) {
             bgMusic.play();
-            isPlaying = true;
-        } else {
-            bgMusic.pause();
-            isPlaying = false;
         }
         updateMusicIcon();
-    });
 
-    // Pastikan ikon sesuai saat halaman dimuat
-    updateMusicIcon();
-
+        // Fungsi Soal
         function acakArray(array) {
             return array.sort(() => Math.random() - 0.5);
         }
