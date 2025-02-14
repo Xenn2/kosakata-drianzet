@@ -20,24 +20,20 @@
 
         /* Overlay untuk Musik */
         .overlay {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 999;
-        }
-
-        .overlay-text {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0); /* Transparan sepenuhnya */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 999;
+    opacity: 0; /* Hilangkan secara visual */
+}
         }
 
         /* Container */
@@ -109,7 +105,7 @@
 <body>
 
     <div class="overlay" id="overlay">
-        <div class="overlay-text">Klik untuk Mulai</div>
+        <div class="overlay">Klik untuk Mulai</div>
     </div>
 
     <audio id="bg-music" loop>
