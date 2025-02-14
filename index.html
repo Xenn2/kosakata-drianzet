@@ -197,18 +197,34 @@
     </div>
 
     <!-- Background Musik -->
+    
     <audio id="bgMusic" loop>
         <source src="shirohae.mp3" type="audio/mp3">
+    </audio>
+    
+<!-- Efek Suara Klik -->
+    <audio id="clickSFX">
+        <source src="click.mp3" type="audio/mp3">
     </audio>
 
     <!-- Kotak utama -->
     <div class="container" id="mainContent">
         <h1>テストの時間</h1>
         <p class="subtitle">(Tes Kosakata)</p>
-        <button class="btn" onclick="window.location.href='bab.html'">Mulai</button>
+      
+        <button class="btn" onclick="playClickSound()">Mulai</button>
     </div>
 
     <script>
+        function playClickSound() {
+            let clickSound = document.getElementById('clickSFX');
+            clickSound.play();
+            
+            // Tunggu sedikit agar SFX sempat berbunyi sebelum pindah halaman
+            setTimeout(() => {
+                window.location.href = 'bab.html';
+            }, 200); 
+        }
         function startGame() {
             document.getElementById('startLayer').style.display = 'none'; // Hilangkan layar awal
             document.getElementById('loadingScreen').style.display = 'flex'; // Tampilkan loading screen
