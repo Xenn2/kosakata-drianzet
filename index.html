@@ -90,14 +90,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            z-index: 10;
-        }
-
-        .loading-text {
-            color: white;
-            font-size: 1rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.8);
+            z-index: 20;
         }
 
         /* Loading Bar */
@@ -119,77 +112,7 @@
             transition: width 0.8s;
         }
 
-        /* Kotak utama */
-        .container {
-            background: rgba(0, 0, 0, 0.5);
-            padding: 25px 30px;
-            border-radius: 15px;
-            width: 85%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-            display: none;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
-        }
-
-        /* Efek muncul */
-        .show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Judul */
-        h1 {
-            color: #fff;
-            font-size: 1.2rem;
-            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.6);
-        }
-
-        /* Subtitle */
-        .subtitle {
-            color: #e0c097;
-            font-size: 1rem;
-            margin-bottom: 15px;
-        }
-
-        /* Tombol Mulai (Halaman Utama) */
-        .btn {
-            background: darkgreen;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: bold;
-            color: white;
-            border: 4px solid black;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 4px 4px 0 black;
-        }
-
-        .btn:hover {
-            background: limegreen;
-            transform: scale(1.05);
-        }
-
-        /* Loading Screen untuk Transition ke bab.html */
-        .loading-screen {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 20;
-        }
-
-        /* Loading Melingkar (Tema Minecraft) */
+        /* Loading Circle (Minecraft Style) */
         .loading-circle {
             width: 60px;
             height: 60px;
@@ -199,19 +122,16 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Animasi Spin */
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        /* Teks Memuat */
-        .loading-screen p {
+        .loading-text {
             color: white;
             font-size: 1rem;
-            font-weight: bold;
-            font-family: 'Press Start 2P', cursive;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.8);
         }
     </style>
 </head>
@@ -246,14 +166,41 @@
     </audio>
 
     <script>
-        function playClickSound() {
-            document.getElementById('clickSFX').play();
-            document.getElementById("mainContent").style.display = "none";
-            document.getElementById("pageLoadingScreen").style.display = "flex";
-            setTimeout(() => {
-                window.location.href = 'bab.html';
-            }, 3000);
+        function startGame() {
+            let startLayer = document.getElementById('startLayer');
+            let loadingScreen = document.getElementById('loadingScreen');
+            let loadingProgress = document.getElementById('loadingProgress');
+            let clickSFX = document.getElementById('clickSFX');
+
+            // SFX Click langsung berbunyi
+            clickSFX.play();
+
+            // Hilangkan start overlay
+            startLayer.style.display = "none";
+
+            // Tampilkan loading screen
+            loadingScreen.style.display = "flex";
+
+            // Simulasi loading bar berjalan
+            let progress = 0;
+            let interval = setInterval(() => {
+                progress += 20;
+                loadingProgress.style.width = progress + "%";
+
+                if (progress >= 100) {
+                    clearInterval(interval);
+
+                    // Tampilkan loading screen kedua (Minecraft Style)
+                    loadingScreen.style.display = "none";
+                    document.getElementById('pageLoadingScreen').style.display = "flex";
+
+                    // Tunggu sebentar sebelum pindah halaman
+                    setTimeout(() => {
+                        window.location.href = 'bab.html';
+                    }, 2000);
+                }
+            }, 500);
         }
     </script>
 </body>
-        </html>
+</html>
