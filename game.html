@@ -137,27 +137,32 @@
         ];
 
         // Tombol Musik
-        const musicButton = document.getElementById("music-button");
-        const bgMusic = document.getElementById("bg-music");
+        // Tombol Musik
+const musicButton = document.getElementById("music-button");
+const bgMusic = document.getElementById("bg-music");
 
-        // Cek status musik di sessionStorage
-        if (sessionStorage.getItem("musicPlaying") === "true") {
-            bgMusic.play();
-            musicButton.innerText = "Musik : ON";
-        }
+// Periksa status musik saat halaman dimuat
+document.addEventListener("DOMContentLoaded", function () {
+    if (sessionStorage.getItem("musicPlaying") === "true") {
+        bgMusic.play();
+        musicButton.innerText = "Musik : ON";
+    } else {
+        musicButton.innerText = "Musik : OFF";
+    }
+});
 
-        // Event Toggle Musik
-        musicButton.addEventListener("click", function () {
-            if (bgMusic.paused) {
-                bgMusic.play();
-                musicButton.innerText = "Musik : ON";
-                sessionStorage.setItem("musicPlaying", "true");
-            } else {
-                bgMusic.pause();
-                musicButton.innerText = "Musik : OFF";
-                sessionStorage.setItem("musicPlaying", "false");
-            }
-        });
+// Event Toggle Musik
+musicButton.addEventListener("click", function () {
+    if (bgMusic.paused) {
+        bgMusic.play();
+        musicButton.innerText = "Musik : ON";
+        sessionStorage.setItem("musicPlaying", "true");
+    } else {
+        bgMusic.pause();
+        musicButton.innerText = "Musik : OFF";
+        sessionStorage.setItem("musicPlaying", "false");
+    }
+});
 
         function acakArray(array) {
             return array.sort(() => Math.random() - 0.5);
