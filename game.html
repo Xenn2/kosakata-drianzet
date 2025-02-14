@@ -25,37 +25,37 @@
             align-items: center;
         }
 
-        /* Tombol Musik */
-        #music-toggle {
+        /* Tombol Musik lebih jelas */
+        #music-button {
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 50%;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.7); /* Background lebih kontras */
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
             cursor: pointer;
             transition: all 0.3s;
-            border: 2px solid white;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Efek glow */
         }
 
-        #music-toggle i {
-            font-size: 28px;
-            color: white;
-        }
-
-        #music-toggle:hover {
-            background: rgba(255, 255, 255, 0.2);
+        #music-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: black;
             transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 1);
+        }
+
+        #music-button i {
+            margin-right: 8px;
         }
 
         .container {
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             padding: 30px;
             border-radius: 15px;
@@ -75,6 +75,7 @@
             margin-bottom: 20px;
         }
 
+        /* Tombol jawaban lebih kontras */
         .btn {
             padding: 12px;
             font-size: 18px;
@@ -82,20 +83,18 @@
             border-radius: 30px;
             margin: 10px 0;
             font-weight: bold;
-            background: linear-gradient(45deg, #ff8c00, #ff2d55);
-            color: white;
-            border: 2px solid white;
+            background: rgba(255, 255, 255, 0.9);
+            color: black;
+            border: 2px solid rgba(0, 0, 0, 0.5);
             transition: all 0.3s;
             display: block;
             width: 80%;
             margin: 10px auto;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
         }
 
         .btn:hover {
-            background: linear-gradient(45deg, #ff2d55, #ff8c00);
+            background: rgba(200, 200, 200, 1);
             transform: scale(1.05);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
         }
 
         #hasil, #nilaiAkhir {
@@ -110,7 +109,7 @@
 <body>
 
     <!-- Tombol Musik -->
-    <button id="music-toggle"><i class="fas fa-music"></i></button>
+    <button id="music-button"><i class="fas fa-music"></i> Musik</button>
 
     <!-- Audio Musik -->
     <audio id="bg-music" loop>
@@ -138,29 +137,27 @@
             { pertanyaan: "Bangun", jawaban: "おきる", opsi: ["ねる", "はたらく", "やすむ"] },
             { pertanyaan: "Tidur", jawaban: "ねる", opsi: ["おきる", "べんきょうする", "やすむ"] },
             { pertanyaan: "Bekerja", jawaban: "はたらく", opsi: ["おきる", "やすむ", "べんきょうする"] },
-            { pertanyaan: "Istirahat", jawaban: "やすむ", opsi: ["はたらく", "べんきょうする", "かえる"] },
-            { pertanyaan: "Belajar", jawaban: "べんきょうする", opsi: ["はたらく", "おきる", "かえる"] },
-            { pertanyaan: "Pulang", jawaban: "かえる", opsi: ["いく", "くる", "のむ"] }
+            { pertanyaan: "Istirahat", jawaban: "やすむ", opsi: ["はたらく", "べんきょうする", "かえる"] }
         ];
 
-        const musicToggle = document.getElementById("music-toggle");
+        const musicButton = document.getElementById("music-button");
         const bgMusic = document.getElementById("bg-music");
 
         if (sessionStorage.getItem("musicPlaying") === "true") {
             bgMusic.play();
-            musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+            musicButton.innerHTML = '<i class="fas fa-volume-up"></i> Musik';
         } else {
-            musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            musicButton.innerHTML = '<i class="fas fa-volume-mute"></i> Musik';
         }
 
-        musicToggle.addEventListener("click", function () {
+        musicButton.addEventListener("click", function () {
             if (bgMusic.paused) {
                 bgMusic.play();
-                musicToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+                musicButton.innerHTML = '<i class="fas fa-volume-up"></i> Musik';
                 sessionStorage.setItem("musicPlaying", "true");
             } else {
                 bgMusic.pause();
-                musicToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                musicButton.innerHTML = '<i class="fas fa-volume-mute"></i> Musik';
                 sessionStorage.setItem("musicPlaying", "false");
             }
         });
@@ -176,15 +173,26 @@
 
         function tampilkanSoal() {
             if (soalTersisa.length === 0) {
+                document.getElementById("pertanyaan").innerText = "🎉 Semua soal selesai!";
+                document.getElementById("pilihan").innerHTML = "";
+                document.getElementById("nilaiAkhir").innerHTML = `<p>Benar: ${benar} / ${soal.length}</p>`;
                 document.getElementById("nilaiAkhir").style.display = "block";
                 return;
             }
+
             let soalSekarang = soalTersisa.shift();
             document.getElementById("pertanyaan").innerText = soalSekarang.pertanyaan;
+
+            let pilihan = acakArray([soalSekarang.jawaban, ...soalSekarang.opsi]);
+            let pilihanHTML = "";
+            pilihan.forEach(pilihan => {
+                pilihanHTML += `<button class="btn" onclick="cekJawaban('${pilihan}', '${soalSekarang.jawaban}')">${pilihan}</button>`;
+            });
+            document.getElementById("pilihan").innerHTML = pilihanHTML;
         }
 
         document.addEventListener("DOMContentLoaded", mulaiSoal);
     </script>
 
 </body>
-    </html>
+</html>
