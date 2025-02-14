@@ -5,53 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bab Pembelajaran</title>
     <style>
-        /* Import Font */
-        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-        /* Reset dasar */
-        * {
+        /* Background Full */
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Press Start 2P', cursive;
-        }
-
-        /* Background utama */
-        body {
-            background: black;
-            height: 100vh;
             display: flex;
-            align-items: center;
             justify-content: center;
-            overflow: hidden;
+            align-items: center;
+            height: 100vh;
+            background: url('image/0070e497f141f64ba23b50a3474cd988.jpg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
         }
 
-        /* Background Video */
-        .background-video {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-        }
-
-        /* Overlay untuk Musik */
+        /* Overlay Musik */
         .overlay {
             position: fixed;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0);
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
             color: white;
             font-size: 24px;
             font-weight: bold;
             cursor: pointer;
             z-index: 999;
+            opacity: 0;
         }
 
         /* Container */
@@ -59,18 +40,18 @@
             position: relative;
             width: 90%;
             max-width: 500px;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.6);
             padding: 30px;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+            border: 2px solid rgba(0, 255, 255, 0.7);
         }
 
         /* Judul */
         .title {
             font-size: 2rem;
             color: white;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            text-shadow: 0 0 10px cyan, 0 0 20px cyan;
             margin-bottom: 10px;
         }
 
@@ -87,27 +68,27 @@
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 20px;
             padding: 10px;
         }
 
-        /* Tombol Bab */
+        /* Tombol Bab dengan Efek Neon */
         .bab-btn {
             text-decoration: none;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             padding: 15px 40px;
-            width: 140px;
+            width: 160px;
             text-align: center;
             border-radius: 12px;
             font-weight: bold;
             transition: 0.3s;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, rgba(220, 120, 70, 0.9), rgba(170, 50, 20, 0.9));
+            background: linear-gradient(135deg, rgba(0, 140, 255, 0.9), rgba(0, 50, 200, 0.9));
             color: white;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 15px rgba(255, 100, 70, 0.8);
-            border: 2px solid rgba(255, 180, 150, 0.5);
+            text-shadow: 0 0 10px cyan;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+            border: 2px solid rgba(0, 255, 255, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -116,30 +97,22 @@
 
         /* Efek Hover */
         .bab-btn:hover {
-            background: linear-gradient(135deg, rgba(255, 150, 100, 1), rgba(200, 80, 50, 1));
-            box-shadow: 0 0 20px rgba(255, 120, 70, 1);
+            background: linear-gradient(135deg, rgba(0, 200, 255, 1), rgba(0, 100, 255, 1));
+            box-shadow: 0 0 30px cyan;
+            transform: scale(1.1);
         }
-
     </style>
 </head>
 <body>
 
-    <!-- Background Video -->
-    <video class="background-video" autoplay loop muted>
-        <source src="fdf7c5d6b4acb59bf0e890a50345c59e.mp4" type="video/mp4">
-    </video>
-
-    <!-- Overlay Awal -->
     <div class="overlay" id="overlay">
-        Klik untuk Memulai
+        <div class="overlay">Klik untuk Mulai</div>
     </div>
 
-    <!-- Audio -->
     <audio id="bg-music" loop>
         <source src="shirohae.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Container Utama -->
     <div class="container">
         <h1 class="title">学習の章</h1>
         <p class="subtitle">Pilih Bab untuk Belajar</p>
@@ -157,22 +130,18 @@
             let bgMusic = document.getElementById("bg-music");
             let overlay = document.getElementById("overlay");
 
-            // Cek apakah musik sudah dimainkan sebelumnya
             if (sessionStorage.getItem("musicPlaying")) {
                 bgMusic.play();
-                overlay.style.display = "none";
+                overlay.style.display = "none"; 
             } else {
                 overlay.addEventListener("click", function () {
-                    // Putar musik
                     bgMusic.play();
                     sessionStorage.setItem("musicPlaying", "true");
-
-                    // Hilangkan overlay setelah diklik
-                    overlay.style.display = "none";
+                    overlay.style.display = "none"; 
                 });
             }
         });
     </script>
 
 </body>
-                                                         </html>
+</html>
