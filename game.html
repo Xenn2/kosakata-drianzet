@@ -27,26 +27,24 @@
 
         /* Tombol Musik */
         #music-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: 'Noto Sans JP', sans-serif;
-        }
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
 
-        #music-button:hover {
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
-            transform: scale(1.05);
-        }
+#music-icon {
+    width: 40px;
+    height: 40px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+#music-button:hover #music-icon {
+    opacity: 1;
+}
 
         .container {
             background: rgba(0, 0, 0, 0.6);
@@ -103,12 +101,12 @@
 <body>
 
     <!-- Tombol Musik -->
-    <button id="music-button">Musik : OFF</button>
-
-    <!-- Audio Musik -->
-    <audio id="bg-music" loop>
-        <source src="shirohae.mp3" type="audio/mpeg">
-    </audio>
+    <button id="music-button">
+    <img id="music-icon" src="icon-music-on.png" alt="Music Icon">
+</button>
+<audio id="bg-music" loop>
+    <source src="shirohae.mp3" type="audio/mpeg">
+</audio>
 
     <!-- Audio Benar/Salah -->
     <audio id="correctSound" src="https://www.fesliyanstudios.com/play-mp3/350"></audio>
@@ -140,31 +138,16 @@
         // Tombol Musik
 // Tombol Musik
 const musicButton = document.getElementById("music-button");
+const musicIcon = document.getElementById("music-icon");
 const bgMusic = document.getElementById("bg-music");
 
-// Periksa status musik saat halaman dimuat
-document.addEventListener("DOMContentLoaded", function () {
-    const musicStatus = localStorage.getItem("musicPlaying");
-
-    if (musicStatus === "true") {
-        bgMusic.play();
-        musicButton.innerText = "Musik : ON";
-    } else {
-        bgMusic.pause();
-        musicButton.innerText = "Musik : OFF";
-    }
-});
-
-// Event Toggle Musik
 musicButton.addEventListener("click", function () {
     if (bgMusic.paused) {
         bgMusic.play();
-        musicButton.innerText = "Musik : ON";
-        localStorage.setItem("musicPlaying", "true");
+        musicIcon.src = "icon-music-on.png"; // Ganti dengan ikon musik ON
     } else {
         bgMusic.pause();
-        musicButton.innerText = "Musik : OFF";
-        localStorage.setItem("musicPlaying", "false");
+        musicIcon.src = "icon-music-off.png"; // Ganti dengan ikon musik OFF
     }
 });
 
