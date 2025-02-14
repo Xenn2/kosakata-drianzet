@@ -138,15 +138,19 @@
 
         // Tombol Musik
         // Tombol Musik
+// Tombol Musik
 const musicButton = document.getElementById("music-button");
 const bgMusic = document.getElementById("bg-music");
 
 // Periksa status musik saat halaman dimuat
 document.addEventListener("DOMContentLoaded", function () {
-    if (sessionStorage.getItem("musicPlaying") === "true") {
+    const musicStatus = localStorage.getItem("musicPlaying");
+
+    if (musicStatus === "true") {
         bgMusic.play();
         musicButton.innerText = "Musik : ON";
     } else {
+        bgMusic.pause();
         musicButton.innerText = "Musik : OFF";
     }
 });
@@ -156,11 +160,11 @@ musicButton.addEventListener("click", function () {
     if (bgMusic.paused) {
         bgMusic.play();
         musicButton.innerText = "Musik : ON";
-        sessionStorage.setItem("musicPlaying", "true");
+        localStorage.setItem("musicPlaying", "true");
     } else {
         bgMusic.pause();
         musicButton.innerText = "Musik : OFF";
-        sessionStorage.setItem("musicPlaying", "false");
+        localStorage.setItem("musicPlaying", "false");
     }
 });
 
